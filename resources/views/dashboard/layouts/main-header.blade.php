@@ -17,50 +17,44 @@
 						</div>
 					</div>
 					<div class="main-header-right">
-						<ul class="nav">
-							<li class="">
-								<div class="dropdown  nav-itemd-none d-md-flex">
-									<a href="#" class="d-flex  nav-item nav-link pl-0 country-flag1" data-toggle="dropdown" aria-expanded="false">
-										<span class="avatar country-Flag mr-0 align-self-center bg-transparent"><img src="{{URL::asset('dashboard/img/flags/us_flag.jpg')}}" alt="img"></span>
-										<div class="my-auto">
-											<strong class="mr-2 ml-2 my-auto">English</strong>
-										</div>
-									</a>
-									<div class="dropdown-menu dropdown-menu-left dropdown-menu-arrow" x-placement="bottom-end">
-										<a href="#" class="dropdown-item d-flex ">
-											<span class="avatar  ml-3 align-self-center bg-transparent"><img src="{{URL::asset('dashboard/img/flags/french_flag.jpg')}}" alt="img"></span>
-											<div class="d-flex">
-												<span class="mt-2">French</span>
-											</div>
-										</a>
-										<a href="#" class="dropdown-item d-flex">
-											<span class="avatar  ml-3 align-self-center bg-transparent"><img src="{{URL::asset('dashboard/img/flags/germany_flag.jpg')}}" alt="img"></span>
-											<div class="d-flex">
-												<span class="mt-2">Germany</span>
-											</div>
-										</a>
-										<a href="#" class="dropdown-item d-flex">
-											<span class="avatar ml-3 align-self-center bg-transparent"><img src="{{URL::asset('dashboard/img/flags/italy_flag.jpg')}}" alt="img"></span>
-											<div class="d-flex">
-												<span class="mt-2">Italy</span>
-											</div>
-										</a>
-										<a href="#" class="dropdown-item d-flex">
-											<span class="avatar ml-3 align-self-center bg-transparent"><img src="{{URL::asset('dashboard/img/flags/russia_flag.jpg')}}" alt="img"></span>
-											<div class="d-flex">
-												<span class="mt-2">Russia</span>
-											</div>
-										</a>
-										<a href="#" class="dropdown-item d-flex">
-											<span class="avatar  ml-3 align-self-center bg-transparent"><img src="{{URL::asset('dashboard/img/flags/spain_flag.jpg')}}" alt="img"></span>
-											<div class="d-flex">
-												<span class="mt-2">spain</span>
-											</div>
-										</a>
-									</div>
-								</div>
-							</li>
+						
+						<!-- Language Selector -->
+						<ul class="nav"> 
+							<li class=""> 
+								<div class="dropdown nav-itemd-none d-md-flex"> 
+									<a href="#" class="d-flex nav-item nav-link pl-0 country-flag1" data-toggle="dropdown" aria-expanded="false"> 
+										<span class="avatar country-Flag mr-0 align-self-center bg-transparent">
+											@php
+												$currentLocale = LaravelLocalization::getCurrentLocale();
+												$currentFlag = $currentLocale.'_flag.jpg';
+												$currentLanguage = LaravelLocalization::getSupportedLocales()[$currentLocale]['native'] ?? 'English';
+											@endphp
+											<img src="{{URL::asset('dashboard/img/flags/' . $currentFlag)}}" alt="img">
+										</span> 
+										<div class="my-auto"> 
+											<strong class="mr-2 ml-2 my-auto">{{ $currentLanguage }}</strong> 
+										</div> 
+									</a> 
+								
+									<div class="dropdown-menu dropdown-menu-left dropdown-menu-arrow" x-placement="bottom-end"> 
+										@foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+											@php
+												$flagFile = $localeCode.'_flag.jpg';
+											@endphp
+											<a rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}" class="dropdown-item d-flex"> 
+												<span class="avatar ml-3 align-self-center bg-transparent">
+													<img src="{{URL::asset('dashboard/img/flags/' . $flagFile)}}" alt="img">
+												</span> 
+												<div class="d-flex"> 
+													<span class="mt-2">{{ $properties['native'] }}</span> 
+												</div> 
+											</a> 
+										@endforeach
+									</div> 
+								</div> 
+							</li> 
 						</ul>
+											
 						<div class="nav nav-item  navbar-nav-right ml-auto">
 							<div class="nav-link" id="bs-example-navbar-collapse-1">
 								<form class="navbar-form" role="search">
@@ -263,7 +257,7 @@
 									<a class="dropdown-item" href=""><i class="bx bxs-inbox"></i>Inbox</a>
 									<a class="dropdown-item" href=""><i class="bx bx-envelope"></i>Messages</a>
 									<a class="dropdown-item" href=""><i class="bx bx-slider-alt"></i> Account Settings</a>
-									<a class="dropdown-item" href="{{ url('/' . $page='page-signin') }}"><i class="bx bx-log-out"></i> Sign Out</a>
+									<a class="dropdown-item" href="{{ route('dashboard.signout') }}"><i class="bx bx-log-out"></i> Sign Out</a>
 								</div>
 							</div>
 							<div class="dropdown main-header-message right-toggle">

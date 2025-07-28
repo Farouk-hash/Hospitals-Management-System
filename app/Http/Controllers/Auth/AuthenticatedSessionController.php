@@ -17,7 +17,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        return view('auth.login');
+        return view('dashboard.auth.signin'); // For Patients , Admins ; 
     }
 
     /**
@@ -25,11 +25,13 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
-
-        $request->session()->regenerate();
-
-        return redirect()->intended(RouteServiceProvider::HOME);
+        $guard = $request->input('guard');
+        $routeServiceProviderValue = $guard == 'admin' ? RouteServiceProvider::ADMIN : RouteServiceProvider::HOME ; 
+        if($guard && $request->authenticate()){
+            $request->session()->regenerate();
+            return redirect()->intended($routeServiceProviderValue); 
+        }
+        return redirect()->back()->withErrors(['failed'=>__('dashboard/login.failed')]);
     }
 
     /**
@@ -37,7 +39,15 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        Auth::guard('web')->logout();
+        if (Auth::guard('admin')->check()) {
+            $guard = 'admin';
+        } elseif (Auth::guard('web')->check()) {
+            $guard = 'web';
+        } else {
+            abort(500); // not authenticated
+        }
+
+        Auth::guard($guard )->logout();
 
         $request->session()->invalidate();
 
