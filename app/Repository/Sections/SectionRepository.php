@@ -8,7 +8,9 @@ use App\Models\Dashboard\Section;
 class SectionRepository implements SectionRepositoryInterface{
 
     public function index(){
+        // $sections = Section::all();
         $sections = Section::all();
+        // dd($sections[0]->translation);
         return view('dashboard.sections.index' , compact('sections'));
     }
     public function store($request){

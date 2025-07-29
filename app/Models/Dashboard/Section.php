@@ -2,6 +2,7 @@
 
 namespace App\Models\Dashboard;
 
+use Database\Factories\SectionFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,5 +17,8 @@ class Section extends Model
 
     public function translation(){
         return $this->hasMany(SectionTranslation::class);
+    }
+    public static function newFactory(){
+        return new SectionFactory();
     }
 }

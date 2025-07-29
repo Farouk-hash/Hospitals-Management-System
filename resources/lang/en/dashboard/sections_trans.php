@@ -6,6 +6,7 @@ return [
    'edit_sections'=>'Edit Sections',
    'delete_sections'=>'Delete Sections',
    'created_at'=>'Created_at',
+   'updated_at'=>'Update_at',
    'Processes'=>'Processes',
    'submit'=>'Submit',
    'ID'=>'ID',

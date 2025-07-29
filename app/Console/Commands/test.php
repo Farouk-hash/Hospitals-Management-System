@@ -5,9 +5,13 @@ namespace App\Console\Commands;
 use App;
 use App\Http\Controllers\Dashboard\Sections;
 use App\Models\Admin;
+use App\Models\Dashboard\Doctor;
+use App\Models\Dashboard\DoctorTranslation;
+use App\Models\Dashboard\Image;
 use App\Models\Dashboard\Section;
 use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Hash;
 
 class test extends Command
 {
@@ -57,11 +61,20 @@ class test extends Command
         // var_dump( $section->index());
 
         //test translated models ; 
-        $section = new Section();
-        $locale = App::getLocale();
-        $section->translateOrNew($locale)->name = "Title {$locale}";
-        $section->save();
-        dd($locale);
+        
+        // $doctor = Doctor::create(
+        //     [
+        //         "en"=>[
+        //             'name'=>'FaroukAhmed23' , 'times'=>'Saturday' ,
+        //         ],
+        //         'email'=>'FaroukAhmed23353@gmail.com' , 'password'=>Hash::make(123)]);
+        
+        // Image::create(['url'=>'1.jpg' , 'imageable_id'=>$doctor->id , 'imageable_type'=>'app\Models\Dashboard\Doctor']);
 
+        // $doctor = Doctor::find(47) ;
+        // var_dump( $doctor->image );
+        $section = Section::with('translation')->where('id',3)
+        ->first();
+        dd($section->translation->where('locale','ar')->first());
     }
 }
