@@ -27,11 +27,11 @@ class AuthenticatedSessionController extends Controller
     {
         $guard = $request->input('guard');
         $routeServiceProviderValue = $guard == 'admin' ? RouteServiceProvider::ADMIN : RouteServiceProvider::HOME ; 
-        if($guard && $request->authenticate()){
-            $request->session()->regenerate();
-            return redirect()->intended($routeServiceProviderValue); 
-        }
-        return redirect()->back()->withErrors(['failed'=>__('dashboard/login.failed')]);
+        
+        $request->authenticate();
+
+        $request->session()->regenerate();
+        return redirect()->intended($routeServiceProviderValue);         
     }
 
     /**
