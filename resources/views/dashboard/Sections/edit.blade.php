@@ -10,6 +10,7 @@
                 </button>
             </div>
             <form action="{{ route('dashboard.sections.update') }}" method="post">
+                {{method_field('put')}}
                 @csrf
                 <div class="modal-body">
                     <label for="exampleInputPassword1">{{trans('Dashboard/sections_trans.name_sections')}}</label>
