@@ -17,6 +17,7 @@ class ImageFactory extends Factory
         $doctors = Doctor::pluck('id')->toArray() ;
         return [
             'url'=>$this->faker->url , 
+
             'imageable_id'=> $this->faker->randomElement($doctors),
             'imageable_type'=>'App\Models\Dashboard\Doctor'
         ];

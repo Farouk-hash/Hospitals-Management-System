@@ -25,4 +25,6 @@ return [
    'Close'=>'Close',
    'Warning'=>'Are Sure Of The Deleting Process ?',
 
+   'appointments_dediction'=>'Dedict an appointment' ,
+   'doctor_image'=>'Image',
 ];

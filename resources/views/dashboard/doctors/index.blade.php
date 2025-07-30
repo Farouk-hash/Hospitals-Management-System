@@ -36,7 +36,9 @@
 										<thead>
 											<tr>
 												<th class="wd-15p border-bottom-0">{{__('dashboard/doctors_trans.ID')}}</th>
-												<th class="wd-15p border-bottom-0">{{__('dashboard/doctors_trans.name_doctor')}}</th>
+                                                <th class="wd-15p border-bottom-0">{{__('dashboard/doctors_trans.doctor_image')}}</th>
+
+                                                <th class="wd-15p border-bottom-0">{{__('dashboard/doctors_trans.name_doctor')}}</th>
                                                 <th class="wd-15p border-bottom-0">{{__('dashboard/doctors_trans.email_doctor')}}</th>
 												<th class="wd-15p border-bottom-0">{{__('dashboard/doctors_trans.phone_doctor')}}</th>
 												<th class="wd-15p border-bottom-0">{{__('dashboard/doctors_trans.status_doctor')}}</th>
@@ -51,7 +53,16 @@
                                             @foreach ($doctors as $doctor)
                                                 <tr>
                                                     <td>{{$loop->iteration}}</td>
-                                                    <td>{{$doctor->name}}</td>
+                                                    <td>
+                                                        @if($doctor->image)
+                                                            <img style="border-radius:50%" width="50px" height="50px" src="{{ asset('dashboard/img/Doctors/' . $doctor->image->url) }}" alt="img">
+                                                        @else
+                                                            <img style="border-radius:50%" width="50px" height="50px" src="{{ asset('dashboard/img/Doctors/Default.png') }}" alt="img">
+
+                                                        @endif
+                                                    </td>
+
+                                                    <td>{{$doctor->name ?? $doctor->translation->first()->name}}</td>
                                                     <td>{{ substr($doctor->email, 0, 5)}}</td>
                                                     <td>{{$doctor->phone}}</td>
                                                     <td>
@@ -67,6 +78,7 @@
                                                         <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"  data-toggle="modal" href="#edit{{$doctor->id}}"><i class="las la-pen"></i></a>
                                                         <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"  data-toggle="modal" href="#delete{{$doctor->id}}"><i class="las la-trash"></i></a>
                                                     </td>
+                                                    @include('dashboard.doctors.delete')
                                                 </tr>
                                             @endforeach
 											

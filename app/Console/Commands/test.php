@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App;
 use App\Http\Controllers\Dashboard\Sections;
 use App\Models\Admin;
+use App\Models\Dashboard\Appointment;
 use App\Models\Dashboard\Doctor;
 use App\Models\Dashboard\DoctorTranslation;
 use App\Models\Dashboard\Image;
@@ -54,6 +55,7 @@ class test extends Command
         // //     );
         // $doctor = Doctor::with(['section'])->find('96');
         // var_dump($doctor->section->name);
-        echo Str::slug('farouk-Ahmed');
+        // echo Str::slug('farouk-Ahmed');
+        var_dump(Appointment::all());
     }
 }

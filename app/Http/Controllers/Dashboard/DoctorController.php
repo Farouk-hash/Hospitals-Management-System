@@ -21,4 +21,7 @@ class DoctorController extends Controller
     public function store(Request $request){
         return $this->doctorRepositoryInterface->store($request);
     }
+    public function destroy(Request $request){
+        return $this->doctorRepositoryInterface->destroy($request);
+    }
 }

@@ -27,4 +27,6 @@ return [
    'Close'=>'اغلاق',
    'Warning'=>'هل انت متاكد من عملية الحذف ؟',
 
+   'appointments_dediction'=>'حدد المواعيد ',
+   'doctor_image'=>'الصوره'
 ];

@@ -3,6 +3,7 @@
 namespace App\Repository\Doctors ;
 
 use App\Interface\Doctors\DoctorRepositoryInterface;
+use App\Models\Dashboard\Appointment;
 use App\Models\Dashboard\Doctor;
 use App\Models\Dashboard\Section;
 use App\Traits\ValidateDoctor;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 class DoctorRepository implements DoctorRepositoryInterface{
     use UploadingImageTraits;
     use ValidateDoctor;
+
     /**
      * Summary of index
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
@@ -21,14 +23,17 @@ class DoctorRepository implements DoctorRepositoryInterface{
         $doctors = Doctor::all();
         return view('dashboard.doctors.index' , compact('doctors'));
     }
+
     /**
      * Summary of create
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create(){
         $sections = Section::all();
-        return view('dashboard.doctors.add',compact('sections'));
+        $appointments = Appointment::all();
+        return view('dashboard.doctors.add',compact('sections' , 'appointments'));
     }
+
     /**
      * Summary of store
      * @param \Illuminate\Http\Request $request
@@ -57,14 +62,23 @@ class DoctorRepository implements DoctorRepositoryInterface{
         }
         
     }
+    public function destroy(Request $request){
+        $doctor_id = $request->input('id');
+        $doctor = Doctor::findOrFail($doctor_id);
 
+        if($doctor->image){
+            $this->deleteImage($doctor->image->url, 'Doctors' , 'upload_image' 
+            , $doctor_id , 'App\Models\Dashboard\Doctor' );
+        }
+        $doctor->delete();
+        return redirect()->route('dashboard.doctors.index');
+    }
     public function edit(){
 
     }
-    public function update(){
+    public function update($request){
 
     }
-    public function destroy(){
-         
-    }
+
+   
 }

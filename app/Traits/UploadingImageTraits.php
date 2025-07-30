@@ -2,7 +2,9 @@
 namespace App\Traits;
 
 use App\Models\Dashboard\Image;
+use File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 trait UploadingImageTraits
 {
@@ -34,14 +36,23 @@ trait UploadingImageTraits
      * @param string $file_name
      * @param string $folderName
      * @param string $disk
+     * @param int $imageable_id
      * @return bool
      */
-    public function deleteImage($file_name, $folderName , $disk )
+    public function deleteImage($file_name, $folderName , $disk , $imageable_id  , $imageable_type)
     {
         $file_path = $folderName . '/' . $file_name;
 
         if (Storage::disk($disk)->exists($file_path)) {
-            return Storage::disk($disk)->delete($file_path);
+            
+            $deleted = Storage::disk($disk)->delete($file_path);
+
+            Image::where('imageable_id', $imageable_id)
+                ->where('imageable_type', $imageable_type)
+                ->delete();
+
+
+            return $deleted;
         }
 
         return false;

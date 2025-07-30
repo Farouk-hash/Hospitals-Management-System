@@ -132,7 +132,7 @@
                                     <select name="section_id" class="form-control SlectBox">
                                         <option value="" selected disabled>------</option>
                                         @foreach($sections as $section)
-                                            <option value="{{$section->id}}">{{$section->name}}</option>
+                                            <option value="{{$section->id}}">{{$section->name ?? $section->translation->first()->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -147,14 +147,11 @@
 
                                 <div class="col-md-11 mg-t-5 mg-md-t-0">
                                     <select multiple="multiple" class="testselect2" name="appointments[]">
-                                        <option selected value="" selected disabled>-- حدد المواعيد --</option>
-                                        <option value="السبت">السبت</option>
-                                        <option value="الأحد">الأحد</option>
-                                        <option value="الأثنين">الأثنين</option>
-                                        <option value="الثلاثاء">الثلاثاء</option>
-                                        <option value="الأربعاء">الأربعاء</option>
-                                        <option value="الخميس">الخميس</option>
-                                        <option value="الجمعة">الجمعة</option>
+                                        <option selected value="" selected disabled>-- {{__('dashboard/doctors_trans.appointments_dediction')}} --</option>
+                                        @foreach ($appointments as $appointment)
+                                            <option value="{{$appointment->name}}">{{$appointment->name ?? $appointment->translation->first()->name}}</option>
+                                        @endforeach
+                                        
                                     </select>
 
                                 </div>
