@@ -11,5 +11,7 @@ class DoctorTranslation extends Model
     protected $fillable = ['name' , 'times'];
 
     public $timestamps = false;
-    
+    public function sections(){
+        return $this->belongsTo(Doctor::class);
+    }
 }

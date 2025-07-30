@@ -14,11 +14,13 @@ class Section extends Model
     use HasFactory ; use Translatable ;
     protected $fillable = ['name'];
     public $translatedAttributes = ['name'];
-
+    public static function newFactory(){
+        return new SectionFactory();
+    }
     public function translation(){
         return $this->hasMany(SectionTranslation::class);
     }
-    public static function newFactory(){
-        return new SectionFactory();
+    public function doctors(){
+        return $this->hasMany(Doctor::class);
     }
 }

@@ -51,30 +51,7 @@ class test extends Command
         //     ['id','name','email','email_verified_at'],
         //         $rows        
         //     );
-        // // test locale ; 
-        // var_dump([
-        //     'App Locale' => App::getLocale(),
-        //     'Session Locale' => session('locale'),            
-        // ]);
-        // // test repository ; 
-        // $section = app(\App\Interface\Sections\SectionRepositoryInterface::class);
-        // var_dump( $section->index());
-
-        //test translated models ; 
-        
-        // $doctor = Doctor::create(
-        //     [
-        //         "en"=>[
-        //             'name'=>'FaroukAhmed23' , 'times'=>'Saturday' ,
-        //         ],
-        //         'email'=>'FaroukAhmed23353@gmail.com' , 'password'=>Hash::make(123)]);
-        
-        // Image::create(['url'=>'1.jpg' , 'imageable_id'=>$doctor->id , 'imageable_type'=>'app\Models\Dashboard\Doctor']);
-
-        // $doctor = Doctor::find(47) ;
-        // var_dump( $doctor->image );
-        $section = Section::with('translation')->where('id',3)
-        ->first();
-        dd($section->translation->where('locale','ar')->first());
+        $doctor = Doctor::with(['section'])->find('96');
+        var_dump($doctor->section->name);
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboard\DoctorController;
 use App\Http\Controllers\Dashboard\Sections;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\DashboardController;
@@ -25,7 +26,20 @@ Route::group(
         Route::delete('/','destroy')->name('dashboard.sections.destroy');
     });
     // ==============================SECTIONS-END==============================
+    // ==============================DOCTORS-START==============================
+    Route::middleware('auth:admin')->controller(DoctorController::class)
+    ->prefix('doctors')->group(function(){
+        Route::get('/' , 'index')->name('dashboard.doctors.index');
+        Route::get('/create' , 'create')->name('dashboard.doctors.create'); // create-form
+        Route::post('/','store')->name('dashboard.doctors.store'); // store-action 
 
+        Route::get('/edit' , 'edit')->name('dashboard.doctors.edit'); // edit-form
+        Route::put('/','update')->name('dashboard.doctors.update'); // update-action ;
+
+        Route::delete('/','destroy')->name('dashboard.doctors.destroy');
+    });
+    // ==============================DOCTORS-END==============================
+    
     require __DIR__.'/auth.php';
 
 });
