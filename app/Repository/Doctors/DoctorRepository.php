@@ -6,11 +6,11 @@ use App\Interface\Doctors\DoctorRepositoryInterface;
 use App\Models\Dashboard\Doctor;
 use App\Models\Dashboard\Section;
 use Illuminate\Http\Request;
-use App\Traits\UploadingImage;
+use App\Traits\UploadingImageTraits;
 use Illuminate\Support\Facades\DB;
 
 class DoctorRepository implements DoctorRepositoryInterface{
-    use UploadingImage;
+    use UploadingImageTraits;
     public function index(){
         $doctors = Doctor::all();
         return view('dashboard.doctors.index' , compact('doctors'));

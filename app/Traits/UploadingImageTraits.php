@@ -4,7 +4,7 @@ namespace App\Traits;
 use App\Models\Dashboard\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-trait UploadingImage
+trait UploadingImageTraits
 {
     public function uploadimage(Request $request , $input_name, $foldername , $disk ,$imageable_id , $imageable_type ){
         if($request->hasFile($input_name)){
