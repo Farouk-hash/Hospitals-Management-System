@@ -12,6 +12,7 @@ use App\Models\Dashboard\Section;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class test extends Command
 {
@@ -50,8 +51,9 @@ class test extends Command
         // $this->table(
         //     ['id','name','email','email_verified_at'],
         //         $rows        
-        //     );
-        $doctor = Doctor::with(['section'])->find('96');
-        var_dump($doctor->section->name);
+        // //     );
+        // $doctor = Doctor::with(['section'])->find('96');
+        // var_dump($doctor->section->name);
+        echo Str::slug('farouk-Ahmed');
     }
 }
