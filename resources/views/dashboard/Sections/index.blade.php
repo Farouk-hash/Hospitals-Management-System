@@ -40,6 +40,8 @@
 											<tr>
 												<th class="wd-15p border-bottom-0">{{__('dashboard/sections_trans.ID')}}</th>
 												<th class="wd-15p border-bottom-0">{{__('dashboard/sections_trans.name_sections')}}</th>
+												<th class="wd-15p border-bottom-0">{{__('dashboard/sections_trans.description')}}</th>
+
 												<th class="wd-20p border-bottom-0">{{__('dashboard/sections_trans.created_at')}}</th>
 												<th class="wd-20p border-bottom-0">{{__('dashboard/sections_trans.updated_at')}}</th>
 
@@ -55,6 +57,10 @@
 													<td>{{$loop->iteration}}</td>
 													<td>{{$section->name ?? $section->translations->first()->name}}</td>
 													
+													<td>{{Str::limit($section->description ,10) ?? 
+														Str::limit($section->translations->first()->description,10)}}
+													</td>
+
 													<td>{{$section->created_at->diffForHumans()}}</td>
 													<td>{{$section->updated_at->diffForHumans()}}</td>
 

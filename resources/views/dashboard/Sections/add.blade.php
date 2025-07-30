@@ -13,6 +13,8 @@
                 <div class="modal-body">
                     <label for="exampleInputPassword1">{{trans('dashboard/sections_trans.name_sections')}}</label>
                     <input type="text" name="name" class="form-control">
+                    <label for="exampleInputPassword1">{{trans('dashboard/sections_trans.description')}}</label>
+                    <input type="text" name="description" class="form-control">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">{{trans('dashboard/sections_trans.Close')}}</button>

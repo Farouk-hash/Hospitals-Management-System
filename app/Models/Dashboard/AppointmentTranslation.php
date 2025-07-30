@@ -5,13 +5,12 @@ namespace App\Models\Dashboard;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SectionTranslation extends Model
+class AppointmentTranslation extends Model
 {
     use HasFactory;
-    protected $fillable = ['name' , 'description'];
+    protected $table = 'appointment_translations';
+    protected $fillable = ['name'];
 
     public $timestamps = false;
-    public function sections(){
-        return $this->belongsTo(Section::class);
-    }
+   
 }

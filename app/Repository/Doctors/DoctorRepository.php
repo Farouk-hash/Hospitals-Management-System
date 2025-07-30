@@ -5,32 +5,37 @@ namespace App\Repository\Doctors ;
 use App\Interface\Doctors\DoctorRepositoryInterface;
 use App\Models\Dashboard\Doctor;
 use App\Models\Dashboard\Section;
+use App\Traits\ValidateDoctor;
 use Illuminate\Http\Request;
 use App\Traits\UploadingImageTraits;
 use Illuminate\Support\Facades\DB;
 
 class DoctorRepository implements DoctorRepositoryInterface{
     use UploadingImageTraits;
+    use ValidateDoctor;
+    /**
+     * Summary of index
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index(){
         $doctors = Doctor::all();
         return view('dashboard.doctors.index' , compact('doctors'));
     }
+    /**
+     * Summary of create
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function create(){
         $sections = Section::all();
         return view('dashboard.doctors.add',compact('sections'));
     }
+    /**
+     * Summary of store
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request){
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:doctors,email',
-            'password' => 'required|string|min:3',
-            'phone' => 'required|string|max:15',
-            'section_id' => 'required|exists:sections,id',
-            'appointments' => 'required|array|min:1',
-            'appointments.*' => 'string',
-            // 'price' => 'required|numeric|min:0',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
+        $validated = $this->validateDoctor($request);
         DB::beginTransaction() ;
         try{
             $doctor = Doctor::create([
@@ -51,5 +56,15 @@ class DoctorRepository implements DoctorRepositoryInterface{
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
         
+    }
+
+    public function edit(){
+
+    }
+    public function update(){
+
+    }
+    public function destroy(){
+         
     }
 }

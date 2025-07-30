@@ -26,6 +26,7 @@ Route::group(
         Route::delete('/','destroy')->name('dashboard.sections.destroy');
     });
     // ==============================SECTIONS-END==============================
+
     // ==============================DOCTORS-START==============================
     Route::middleware('auth:admin')->controller(DoctorController::class)
     ->prefix('doctors')->group(function(){

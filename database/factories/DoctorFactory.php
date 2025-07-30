@@ -4,6 +4,7 @@ namespace Database\Factories;
 use App\Models\Dashboard\Doctor;
 use App\Models\Dashboard\Section;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\DB;
 
 
 class DoctorFactory extends Factory
@@ -11,6 +12,7 @@ class DoctorFactory extends Factory
     protected $model = Doctor::class ;
     public function definition(): array
     {
+        DB::table('doctors')->delete();
         $sections = Section::pluck('id')->toArray();
         return [
             'name'=>$this->faker->unique()->name , 

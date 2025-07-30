@@ -4,7 +4,6 @@ return [
    'add_Doctor'=>'Add Doctor',
    'doctor_title'=>'Doctors',
    'name_doctor'=>'Name',
-
    'email_doctor'=>'Email',
    'phone_doctor'=>'Phone',
    'doctor_photo'=>'Photo',
