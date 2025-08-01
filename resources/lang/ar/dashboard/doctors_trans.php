@@ -16,6 +16,7 @@ return [
    'section'=>'القسم',
    'status_doctor'=>'الحاله',
    'Not_enabled'=>'غير مفعل',
+   'Status_change'=>'Status change',
    'Enabled'=>'مفعل' , 
    'edit_doctor'=>'تعديل طبيب',
    'delete_doctor'=>'حذف طبيب',
@@ -26,7 +27,15 @@ return [
    'submit'=>'تاكيد',
    'Close'=>'اغلاق',
    'Warning'=>'هل انت متاكد من عملية الحذف ؟',
-
+   'Choose'=>'اختر',
+   
    'appointments_dediction'=>'حدد المواعيد ',
-   'doctor_image'=>'الصوره'
+   'doctor_image'=>'الصوره',
+   'Edit'=>'تعديل',
+   'Delete'=>'حذف',
+   'unActivate'=>'تعديل الحاله',
+   'change_password'=>'تغيير المرور',
+   'new_password'=>'كلمه مرور جديده',
+   'confirm_password'=>'تأكيد كلمه المرور',
+   'back'=>'رجوع'
 ];

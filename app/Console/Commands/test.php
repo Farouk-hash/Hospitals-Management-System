@@ -56,6 +56,8 @@ class test extends Command
         // $doctor = Doctor::with(['section'])->find('96');
         // var_dump($doctor->section->name);
         // echo Str::slug('farouk-Ahmed');
-        var_dump(Appointment::all());
+        // var_dump(Appointment::all());
+        // $doctors = Doctor::find(369);
+        // var_dump($doctors->appointments[3]->name);
     }
 }

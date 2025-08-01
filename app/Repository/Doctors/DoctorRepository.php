@@ -5,6 +5,7 @@ namespace App\Repository\Doctors ;
 use App\Interface\Doctors\DoctorRepositoryInterface;
 use App\Models\Dashboard\Appointment;
 use App\Models\Dashboard\Doctor;
+use App\Models\Dashboard\Image;
 use App\Models\Dashboard\Section;
 use App\Traits\ValidateDoctor;
 use Illuminate\Http\Request;
@@ -20,6 +21,10 @@ class DoctorRepository implements DoctorRepositoryInterface{
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index(){
+        if(session()->has(['section_id'])){
+            session()->forget(['section_id']);
+        }
+
         $doctors = Doctor::all();
         return view('dashboard.doctors.index' , compact('doctors'));
     }
@@ -31,7 +36,10 @@ class DoctorRepository implements DoctorRepositoryInterface{
     public function create(){
         $sections = Section::all();
         $appointments = Appointment::all();
-        return view('dashboard.doctors.add',compact('sections' , 'appointments'));
+        $section_id = session('section_id') ; // true -> remove the drop-down of sections , false ->display them;
+
+        return view('dashboard.doctors.add',
+        compact('sections' , 'appointments' , 'section_id'));
     }
 
     /**
@@ -48,13 +56,22 @@ class DoctorRepository implements DoctorRepositoryInterface{
             'phone'=>$validated['phone'],'password'=>$validated['password']]);
           
             // store trans
-            $doctor->name = $request->name;
-            $doctor->times =implode(",",$request->appointments);
+            $doctor->name = $request->name ;
+
+            // store doctor-appointments [many-to-many Relation];
+            $appointments_array = $validated['appointments'];
+            $doctor->appointments()->attach($appointments_array);
             $doctor->save();
+
             $this->uploadimage($request , 'photo' , 'Doctors' , 'upload_image', $doctor->id , 'App\Models\Dashboard\Doctor');
             DB::commit();
             session()->flash('add');
-            return redirect()->route('dashboard.doctors.index');
+            
+            $url = session('section_id') ? 
+            route('dashboard.sections.show',session('section_id')) :
+            route('dashboard.doctors.index');
+
+            return redirect($url);
         }
         catch (\Exception $e) {
             DB::rollback();
@@ -73,11 +90,55 @@ class DoctorRepository implements DoctorRepositoryInterface{
         $doctor->delete();
         return redirect()->route('dashboard.doctors.index');
     }
-    public function edit(){
-
+    public function edit(int $doctor_id){
+        $sections = Section::all();
+        $appointments = Appointment::all();
+        $doctor = Doctor::with(['appointments','section','image'])->findOrFail($doctor_id);
+        return view('dashboard.doctors.edit',compact('doctor','sections','appointments'));
     }
-    public function update($request){
+    public function update(Request $request){
+        $validated = $this->validateDoctor($request , ['password']);
+        $doctor_id = $request->input('id');
+        // dd($validated);
+        $doctor = Doctor::findOrFail($doctor_id);
+        $doctor->update([
+        'email'=>$validated['email'],
+        'phone'=>$validated['phone'],
+        'section_id'=>$validated['section_id']]);
+        $doctor->name = $validated['name'];
+        $appointments_array = $validated['appointments'];
+        $doctor->appointments()->sync($appointments_array);
+        $doctor->save();
+        if($request->hasFile('photo')){
+            // remove old one if exists ; 
+            if($doctor->image){
+                $this->deleteImage($doctor->image->url, 'Doctors' , 'upload_image' 
+            , $doctor_id , 'App\Models\Dashboard\Doctor' );
+            }
+            // create new one ; 
+            $this->uploadimage($request , 'photo' , 'Doctors' , 'upload_image', $doctor->id , 'App\Models\Dashboard\Doctor');
 
+        }
+        $url =session('section_id') ? 
+            route('dashboard.sections.show',session('section_id')) : route('dashboard.doctors.index');
+
+        return redirect($url );
+    }
+
+    public function status(Request $request){
+        $doctor_id = $request->input('id');
+        $status = $request->input('status');
+        Doctor::findOrFail($doctor_id)->update(['status'=>$status]);
+        return redirect()->back();
+    }
+
+    public function update_password(Request $request){
+        $request->validate([
+            'password' => 'required|string|min:3|confirmed',
+        ]);
+        Doctor::findOrFail($request->input('id'))->update(['password'=>$request->input('password')]);
+        
+        return redirect()->back();
     }
 
    

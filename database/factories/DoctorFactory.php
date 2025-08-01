@@ -17,7 +17,7 @@ class DoctorFactory extends Factory
         return [
             'name'=>$this->faker->unique()->name , 
             'email'=>$this->faker->unique()->safeEmail , 
-            'times'=>$this->faker->randomElement(['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']),
+            // 'times'=>$this->faker->randomElement(['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']),
             'password'=>$this->faker->password ,
             'section_id'=> $this->faker->randomElement($sections),
             'phone'=>$this->faker->phoneNumber(),

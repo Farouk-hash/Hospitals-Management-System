@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('locale')->index();
             
             $table->string('name');
-            $table->string('times');
+            // $table->string('times');
 
             $table->unique(['doctor_id','locale']);
             $table->foreign('doctor_id')->references('id')->on('doctors')

@@ -26,5 +26,14 @@ return [
    'Warning'=>'Are Sure Of The Deleting Process ?',
 
    'appointments_dediction'=>'Dedict an appointment' ,
-   'doctor_image'=>'Image',
+   'doctor_image'=>'Image',  
+   'Edit'=>'Edit',
+   'Delete'=>'Delete',
+   'unActivate'=>'Status',
+   'Choose'=>'Choose',
+   'change_password'=>'Change password',
+   'new_password'=>'New password',
+   'confirm_password'=>'Confirm Password',
+   'back'=>'Back'
+
 ];

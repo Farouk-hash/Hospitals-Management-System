@@ -11,10 +11,19 @@ class SectionRepository implements SectionRepositoryInterface{
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index(){
-        // $sections = Section::all();
         $sections = Section::all();
-        // dd($sections[0]->translation);
         return view('dashboard.sections.index' , compact('sections'));
+    }
+    /**
+     * Summary of show
+     * @param int $section_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function show(int $section_id){
+        $sections = Section::findOrFail($section_id);
+        $doctors = $sections->doctors; // doctors related to section-id ;
+        session()->put(['section_id'=>$section_id]);
+        return view('dashboard.doctors.index' , compact('doctors'));
     }
     /**
      * Summary of store

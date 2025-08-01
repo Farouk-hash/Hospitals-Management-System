@@ -21,6 +21,7 @@ Route::group(
     Route::middleware('auth:admin')->controller(Sections::class)
     ->prefix('sections')->group(function(){
         Route::get('/' , 'index')->name('dashboard.sections.index');
+        Route::get('/{section_id}','show')->name('dashboard.sections.show');
         Route::post('/','store')->name('dashbord.sections.store');
         Route::put('/','update')->name('dashboard.sections.update');
         Route::delete('/','destroy')->name('dashboard.sections.destroy');
@@ -34,8 +35,10 @@ Route::group(
         Route::get('/create' , 'create')->name('dashboard.doctors.create'); // create-form
         Route::post('/','store')->name('dashboard.doctors.store'); // store-action 
 
-        Route::get('/edit' , 'edit')->name('dashboard.doctors.edit'); // edit-form
+        Route::get('/edit/{doctor_id}' , 'edit')->name('dashboard.doctors.edit'); // edit-form
         Route::put('/','update')->name('dashboard.doctors.update'); // update-action ;
+        Route::put('/status','status')->name('dashboard.doctors.update_status');
+        Route::put('/password','update_password')->name('dashboard.doctors.update_password');
 
         Route::delete('/','destroy')->name('dashboard.doctors.destroy');
     });

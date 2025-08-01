@@ -123,20 +123,23 @@
 
 
                             <div class="row row-xs align-items-center mg-b-20">
-                                <div class="col-md-1">
-                                    <label for="exampleInputEmail1">
-                                        {{__('dashboard/doctors_trans.section')}}</label>
-                                </div>
-
-                                <div class="col-md-11 mg-t-5 mg-md-t-0">
-                                    <select name="section_id" class="form-control SlectBox">
-                                        <option value="" selected disabled>------</option>
-                                        @foreach($sections as $section)
-                                            <option value="{{$section->id}}">{{$section->name ?? $section->translation->first()->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
+                                @if(!$section_id)
+                                    <div class="col-md-1">
+                                        <label for="exampleInputEmail1">
+                                            {{__('dashboard/doctors_trans.section')}}</label>
+                                    </div>
+                                    <div class="col-md-11 mg-t-5 mg-md-t-0">
+                                        <select name="section_id" class="form-control SlectBox">
+                                            <option value="" selected disabled>------</option>
+                                            @foreach($sections as $section)
+                                                <option value="{{$section->id}}">{{$section->name ?? $section->translation->first()->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                @else  
+                                {{var_dump($section_id)}}
+                                    <input type="hidden" name="section_id" value="{{$section_id}}">
+                                @endif
                             </div>
 
                             <div class="row row-xs align-items-center mg-b-20">
@@ -149,7 +152,7 @@
                                     <select multiple="multiple" class="testselect2" name="appointments[]">
                                         <option selected value="" selected disabled>-- {{__('dashboard/doctors_trans.appointments_dediction')}} --</option>
                                         @foreach ($appointments as $appointment)
-                                            <option value="{{$appointment->name}}">{{$appointment->name ?? $appointment->translation->first()->name}}</option>
+                                            <option value="{{$appointment->id}}">{{$appointment->name ?? $appointment->translation->first()->name}}</option>
                                         @endforeach
                                         
                                     </select>
@@ -158,20 +161,7 @@
 
                             </div>
 
-                            <div class="row row-xs align-items-center mg-b-20">
-                                <div class="col-md-1">
-                                    <label for="exampleInputEmail1">
-                                        {{__('dashboard/doctors_trans.price')}}</label>
-                                </div>
-
-                                <div class="col-md-11 mg-t-5 mg-md-t-0">
-                                    <input class="form-control" name="price" value="0.00" type="text">
-                                </div>
-
-                            </div>
-
-
-
+                           
                             <div class="row row-xs align-items-center mg-b-20">
                                 <div class="col-md-1">
                                     <label for="exampleInputEmail1">

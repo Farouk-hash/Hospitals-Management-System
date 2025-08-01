@@ -13,7 +13,7 @@ class Doctor extends Model
     use Translatable ;
 
     protected $fillable = ['email','password' ,'section_id', 'phone','status'];
-    public $translatedAttributes = ['name' , 'times'];
+    public $translatedAttributes = ['name'];
     protected $casts = [
         'email_verified_at' => 'datetime',
         'phone_verified_at' => 'datetime',
@@ -35,5 +35,8 @@ class Doctor extends Model
         return $this->hasMany(DoctorTranslation::class);
     }
 
+    public function appointments(){
+        return $this->belongsToMany(Appointment::class , 'doctor_appointments');
+    }
 
 }

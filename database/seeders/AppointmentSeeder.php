@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Dashboard\Appointment;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class AppointmentSeeder extends Seeder
 {
@@ -13,6 +14,7 @@ class AppointmentSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('appointment')->delete();
         $appointments = [
             'Saturday',
             'Sunday',

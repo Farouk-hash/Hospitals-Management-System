@@ -16,6 +16,9 @@ class Sections extends Controller
     public function index(){
         return $this->section->index();
     }
+    public function show(int $section_id){
+        return $this->section->show($section_id);
+    }
     public function store(Request $request){
         return $this->section->store($request);
     }

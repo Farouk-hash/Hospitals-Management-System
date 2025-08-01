@@ -24,4 +24,16 @@ class DoctorController extends Controller
     public function destroy(Request $request){
         return $this->doctorRepositoryInterface->destroy($request);
     }
+    public function edit(int $doctor_id){
+        return $this->doctorRepositoryInterface->edit($doctor_id);
+    }
+    public function update(Request $request){
+        return $this->doctorRepositoryInterface->update($request);
+    }
+    public function status(Request $request){
+        return $this->doctorRepositoryInterface->status($request);
+    }
+    public function update_password(Request $request){
+        return $this->doctorRepositoryInterface->update_password($request);
+    }
 }

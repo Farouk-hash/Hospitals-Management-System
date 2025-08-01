@@ -28,8 +28,20 @@
 							 <div class="card-header pb-0">
                                 <div class="d-flex justify-content-between">
                                     <a href="{{route('dashboard.doctors.create')}}" class="btn btn-primary" role="button" aria-pressed="true">{{trans('dashboard/doctors_trans.add_Doctor')}}</a>
+                                    <button type="button"
+                                class="btn btn-secondary pd-x-30 mg-r-5 mg-t-5"
+                                onclick="window.history.back();">
+                                {{ trans('dashboard/doctors_trans.back') }}
+                            </button>
+                                    
                                 </div>
                             </div>
+
+                            @if($errors->any())
+                                @foreach ($errors->all() as $err)
+                                    <span style="red;">{{$err}}</span>
+                                @endforeach
+                            @endif
                             <div class="card-body">
 								<div class="table-responsive">
 									<table class="table text-md-nowrap" id="example1">
@@ -73,12 +85,42 @@
                                                     <td>{{$doctor->section->name ?? $doctor->section->translation->first()->name}}</td>
                                                     <td>{{$doctor->created_at->diffForHumans()}}</td>
                                                     <td>{{$doctor->updated_at->diffForHumans()}}</td>
-
+                                                    
                                                     <td>
-                                                        <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"  data-toggle="modal" href="#edit{{$doctor->id}}"><i class="las la-pen"></i></a>
-                                                        <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"  data-toggle="modal" href="#delete{{$doctor->id}}"><i class="las la-trash"></i></a>
+                                                        <div class="dropdown">
+                                                            <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton{{ $doctor->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                {{ __('dashboard/doctors_trans.Processes') }}
+                                                            </button>
+                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $doctor->id }}">
+                                                                <a class="dropdown-item modal-effect text-info" data-effect="effect-scale"
+                                                                href="{{route('dashboard.doctors.edit',[$doctor->id] )}}">
+                                                                    <i class="las la-pen"></i> {{ __('dashboard/doctors_trans.Edit') }}
+                                                                </a>
+                                                                
+                                                               <a class="dropdown-item modal-effect text-primary" data-effect="effect-scale" 
+                                                                data-toggle="modal" href="#update_password{{ $doctor->id }}">
+                                                                    <i class="las la-key"></i> {{ __('dashboard/doctors_trans.change_password') }}
+                                                                </a>
+
+                                                                <a class="dropdown-item modal-effect text-warning" data-effect="effect-scale" 
+                                                                data-toggle="modal" href="#update_status{{ $doctor->id }}">
+                                                                    <i class="las la-power-off"></i> {{ __('dashboard/doctors_trans.unActivate') }}
+                                                                </a>
+
+                                                                
+                                                                <a class="dropdown-item modal-effect text-danger" data-effect="effect-scale" 
+                                                                data-toggle="modal" href="#delete{{ $doctor->id }}">
+                                                                    <i class="las la-trash"></i> {{ __('dashboard/doctors_trans.Delete') }}
+                                                                </a>
+                                                            </div>
+                                                        </div>
                                                     </td>
-                                                    @include('dashboard.doctors.delete')
+                                                    
+                                                    {{-- modal-forms --}}
+                                                    @include('dashboard.doctors.delete') 
+                                                    @include('dashboard.doctors.update_password')
+                                                    @include('dashboard.doctors.update_status')
+
                                                 </tr>
                                             @endforeach
 											

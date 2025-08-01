@@ -17,5 +17,8 @@ class Appointment extends Model
     public function translation(){
         return $this->hasMany(AppointmentTranslation::class);
     }
+    public function doctors(){
+        return $this->belongsToMany(Doctor::class , 'doctor_appointments');
+    }
     
 }

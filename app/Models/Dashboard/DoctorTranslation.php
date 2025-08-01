@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class DoctorTranslation extends Model
 {
     use HasFactory;
-    protected $fillable = ['name' , 'times'];
+    protected $fillable = ['name'];
 
     public $timestamps = false;
     public function sections(){

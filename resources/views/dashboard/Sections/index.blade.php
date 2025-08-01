@@ -55,7 +55,11 @@
 											@foreach ($sections as $section)
 												<tr>
 													<td>{{$loop->iteration}}</td>
-													<td>{{$section->name ?? $section->translations->first()->name}}</td>
+													<td>
+														<a href="{{route('dashboard.sections.show',[$section->id])}}">
+														
+														{{$section->name ?? $section->translations->first()->name}}
+													</td>
 													
 													<td>{{Str::limit($section->description ,10) ?? 
 														Str::limit($section->translations->first()->description,10)}}
