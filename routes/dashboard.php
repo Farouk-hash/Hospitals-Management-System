@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Dashboard\DoctorController;
 use App\Http\Controllers\Dashboard\Sections;
+use App\Http\Controllers\Dashboard\ServicesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\DashboardController;
 
@@ -44,6 +45,17 @@ Route::group(
     });
     // ==============================DOCTORS-END==============================
     
+    // =============================SERVICES-START==============================
+    Route::middleware('auth:admin')->controller(ServicesController::class)->prefix('services')
+    ->group(function(){
+        Route::get('/','index')->name('dashboard.services.index');
+        Route::post('/','store')->name('dashboard.services.store');
+        Route::put('/','update')->name('dashboard.services.update');
+        Route::delete('/','destroy')->name('dashboard.services.destroy');
+
+    });
+    // ==============================SERVICES-END==============================
+
     require __DIR__.'/auth.php';
 
 });
