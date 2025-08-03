@@ -9,6 +9,15 @@
 <!--  Sidebar css -->
 <link href="{{URL::asset('dashboard/plugins/sidebar/sidebar.css')}}" rel="stylesheet">
 
+<!-- Internal Data table css -->
+<link href="{{URL::asset('dashboard/plugins/datatable/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" />
+<link href="{{URL::asset('dashboard/plugins/datatable/css/buttons.bootstrap4.min.css')}}" rel="stylesheet">
+<link href="{{URL::asset('dashboard/plugins/datatable/css/responsive.bootstrap4.min.css')}}" rel="stylesheet" />
+<link href="{{URL::asset('dashboard/plugins/datatable/css/jquery.dataTables.min.css')}}" rel="stylesheet">
+<link href="{{URL::asset('dashboard/plugins/datatable/css/responsive.dataTables.min.css')}}" rel="stylesheet">
+<link href="{{URL::asset('dashboard/plugins/select2/css/select2.min.css')}}" rel="stylesheet">
+
+
 @if(App::getLocale() == 'ar')
     <!-- Sidemenu css -->
     <link rel="stylesheet" href="{{URL::asset('dashboard/css-rtl/sidemenu.css')}}">
@@ -31,3 +40,5 @@
     <!---Skinmodes css-->
     <link href="{{URL::asset('dashboard/css/skin-modes.css')}}" rel="stylesheet">
 @endif
+
+@livewireStyles

@@ -1,6 +1,7 @@
 <?php
 
 return [
+   'all'=>'all doctors',
    'add_Doctor'=>'Add Doctor',
    'doctor_title'=>'Doctors',
    'name_doctor'=>'Name',

@@ -21,4 +21,10 @@ class ServiceValidatedRequest extends FormRequest
             'price' => ['required', 'numeric', 'regex:/^\d{1,8}(\.\d{1,2})?$/'],
         ];
     }
+
+    public function message(){
+        return [
+            'name'=>'Not a valid name'
+        ];
+    }
 }

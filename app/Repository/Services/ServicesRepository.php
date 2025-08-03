@@ -20,10 +20,11 @@ class ServicesRepository implements ServicesRepositoryInterface
         return Services::findOrFail($id);
     }
 
-    public function store(ServiceValidatedRequest $request)
+    public function store(Request $request)
     {
        $validated = $request->validate([
             'name'  => ['string', 'required'],
+            'description'=>['string','required'],
             'price' => ['required', 'numeric', 'regex:/^\d{1,8}(\.\d{1,2})?$/'],
         ]);
         $service = new Services();

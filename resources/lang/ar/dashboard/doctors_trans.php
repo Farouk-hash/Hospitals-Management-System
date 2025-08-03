@@ -2,7 +2,7 @@
 // doctors_trans.Enabled
 
 return [
-
+   'all'=>'جميع الاطباء',
    'add_Doctor'=>'اضافة طبيب',
    'doctor_title'=>'الاطباء',
 

@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Dashboard\DoctorController;
+use App\Http\Controllers\Dashboard\InsuranceController;
 use App\Http\Controllers\Dashboard\Sections;
 use App\Http\Controllers\Dashboard\ServicesController;
+use App\Livewire\GroupServices;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\DashboardController;
 
@@ -55,8 +57,24 @@ Route::group(
 
     });
     // ==============================SERVICES-END==============================
+    
+    Route::middleware('auth:admin')->controller(InsuranceController::class)->prefix('insurance')
+    ->group(function(){
+        Route::get('/','index')->name('dashboard.insurance.index');
+        Route::post('/','store')->name('dashboard.insurance.store');
+        Route::put('/','update')->name('dashboard.insurance.update');
+        Route::delete('/','destroy')->name('dashboard.insurance.destroy');
+    });
 
+    
     require __DIR__.'/auth.php';
-
 });
+
+
+Route::get('{lang}/groupservices', function () {
+     return view('livewire.include-group-services');
+ })
+ ->middleware('auth:admin')
+ ->name('dashboard.group-services.index');
+
 

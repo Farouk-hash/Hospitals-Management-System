@@ -19,4 +19,8 @@ class Services extends Model
     public function translation(){
         return $this->hasMany(ServicesTranslation::class);
     }
+    public function service_group()
+    {
+        return $this->belongsToMany(groupServices::class,'group_pivot_services' , 'service_id','group_id');
+    }
 }

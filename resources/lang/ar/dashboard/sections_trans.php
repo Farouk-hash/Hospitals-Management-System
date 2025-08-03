@@ -1,7 +1,7 @@
 <?php
 
 return [
-
+   'all'=>'جميع الاقسام',
    'add_sections'=>'اضافة قسم',
    'name_sections'=>'اسم القسم',
    'edit_sections'=>'تعديل قسم',

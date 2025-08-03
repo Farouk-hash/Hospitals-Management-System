@@ -41,7 +41,9 @@
 											@php
 												$flagFile = $localeCode.'_flag.jpg';
 											@endphp
-											<a rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}" class="dropdown-item d-flex"> 
+											<a rel="alternate" hreflang="{{ $localeCode }}" 
+											href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}" 
+											class="dropdown-item d-flex"> 
 												<span class="avatar ml-3 align-self-center bg-transparent">
 													<img src="{{URL::asset('dashboard/img/flags/' . $flagFile)}}" alt="img">
 												</span> 
