@@ -85,6 +85,8 @@
 							<li><a class="slide-item" href="{{ route('dashboard.services.index') }}">{{__('dashboard/services_trans.single_services')}}</a></li>
 							<li><a class="slide-item" href="{{ route('dashboard.group-services.index',['lang' => app()->getLocale()]) }}">{{__('dashboard/services_trans.group_services_title')}}</a></li>
 							<li><a class="slide-item" href="{{ route('dashboard.insurance.index') }}">{{__('dashboard/insurance_trans.insurance_title')}}</a></li>
+							<li><a class="slide-item" href="{{ route('dashboard.ambulance.index') }}">{{__('dashboard/ambulance_trans.title')}}</a></li>
+
 
 						</ul>
 					</li>

@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App;
 use App\Http\Controllers\Dashboard\Sections;
 use App\Models\Admin;
+use App\Models\Dashboard\Ambulance;
 use App\Models\Dashboard\Appointment;
 use App\Models\Dashboard\Doctor;
 use App\Models\Dashboard\DoctorTranslation;
@@ -59,5 +60,20 @@ class test extends Command
         // var_dump(Appointment::all());
         // $doctors = Doctor::find(369);
         // var_dump($doctors->appointments[3]->name);
+            $ambulance = Ambulance::with('translations.carType')->find(6);
+            $translation = $ambulance->translate('ar');
+
+            // get the relation query (carType() returns a query builder)
+            $query = $translation->carType();
+
+            // get SQL and bindings
+            $sql = $query->toSql();
+            $bindings = $query->getBindings();
+
+            // merge them for readability
+            $finalSql = vsprintf(str_replace('?', "'%s'", $sql), $bindings);
+
+            // print the full query
+            dd($query->name);
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboard\AmbulanceController;
 use App\Http\Controllers\Dashboard\DoctorController;
 use App\Http\Controllers\Dashboard\InsuranceController;
 use App\Http\Controllers\Dashboard\Sections;
@@ -64,6 +65,16 @@ Route::group(
         Route::post('/','store')->name('dashboard.insurance.store');
         Route::put('/','update')->name('dashboard.insurance.update');
         Route::delete('/','destroy')->name('dashboard.insurance.destroy');
+    });
+
+
+    Route::middleware('auth:admin')->controller(AmbulanceController::class)->prefix('ambulance')
+    ->group(function(){
+        Route::get('/','index')->name('dashboard.ambulance.index');
+        Route::get('/create','create')->name('dashboard.ambulance.create');
+        Route::post('/','store')->name('dashboard.ambulance.store');
+        Route::put('/','update')->name('dashboard.ambulance.update');
+        Route::delete('/','destroy')->name('dashboard.ambulance.destroy');
     });
 
     
