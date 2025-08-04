@@ -3,6 +3,7 @@
 use App\Http\Controllers\Dashboard\AmbulanceController;
 use App\Http\Controllers\Dashboard\DoctorController;
 use App\Http\Controllers\Dashboard\InsuranceController;
+use App\Http\Controllers\Dashboard\PatientController;
 use App\Http\Controllers\Dashboard\Sections;
 use App\Http\Controllers\Dashboard\ServicesController;
 use App\Livewire\GroupServices;
@@ -76,6 +77,17 @@ Route::group(
         Route::put('/','update')->name('dashboard.ambulance.update');
         Route::delete('/','destroy')->name('dashboard.ambulance.destroy');
     });
+
+    Route::middleware('auth:admin')->controller(PatientController::class)->prefix('patient')
+    ->group(function(){
+        Route::get('/','index')->name('dashboard.patient.index');
+            Route::get('/create','create')->name('dashboard.patient.create');
+
+        Route::post('/','store')->name('dashboard.patient.store');
+        Route::put('/','update')->name('dashboard.patient.update');
+        Route::delete('/','destroy')->name('dashboard.patient.destroy');
+    });
+
 
     
     require __DIR__.'/auth.php';

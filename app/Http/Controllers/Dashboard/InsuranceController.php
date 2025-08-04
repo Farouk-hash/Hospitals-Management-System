@@ -19,8 +19,6 @@ class InsuranceController extends Controller
         return $this->InsuranceRepositoryInterface->index();
     }
 
-
-    
     public function store(InsuranceRequest $request)
     {
         return $this->InsuranceRepositoryInterface->store($request);
@@ -29,18 +27,14 @@ class InsuranceController extends Controller
 
   
 
-    /**
-     * Update the specified resource in storage.
-     */
+  
     public function update(InsuranceRequest $request)
     {
         return $this->InsuranceRepositoryInterface->update($request);
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+  
     public function destroy(Request $request)
     {
         return $this->InsuranceRepositoryInterface->destroy($request);
