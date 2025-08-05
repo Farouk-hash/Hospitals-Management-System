@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('group_services_translations', function (Blueprint $table) {
-            $table->text('notes');
-
+        Schema::create('payment_types',function(Blueprint $table){
+            $table->id('id');
+            $table->string('name');
+            $table->timestamps() ; 
         });
     }
 
@@ -22,8 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('group_services_translations', function (Blueprint $table) {
-            
-        });
+        //
     }
 };

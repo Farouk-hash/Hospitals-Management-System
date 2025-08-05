@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('group_services_translations', function (Blueprint $table) {
-            $table->text('notes');
-
+        Schema::table('single_invoice', function (Blueprint $table) {
+            $table->foreignId('payment_type_id')->references('id')->on('payment_types')->cascadeOnUpdate();
         });
     }
 
@@ -22,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('group_services_translations', function (Blueprint $table) {
-            
+        Schema::table('single_invoice', function (Blueprint $table) {
+            //
         });
     }
 };

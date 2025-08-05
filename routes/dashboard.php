@@ -4,6 +4,7 @@ use App\Http\Controllers\Dashboard\AmbulanceController;
 use App\Http\Controllers\Dashboard\DoctorController;
 use App\Http\Controllers\Dashboard\InsuranceController;
 use App\Http\Controllers\Dashboard\PatientController;
+use App\Http\Controllers\Dashboard\RecieptAccountController;
 use App\Http\Controllers\Dashboard\Sections;
 use App\Http\Controllers\Dashboard\ServicesController;
 use App\Livewire\GroupServices;
@@ -81,23 +82,36 @@ Route::group(
     Route::middleware('auth:admin')->controller(PatientController::class)->prefix('patient')
     ->group(function(){
         Route::get('/','index')->name('dashboard.patient.index');
-            Route::get('/create','create')->name('dashboard.patient.create');
+        Route::get('/create','create')->name('dashboard.patient.create');
 
         Route::post('/','store')->name('dashboard.patient.store');
         Route::put('/','update')->name('dashboard.patient.update');
         Route::delete('/','destroy')->name('dashboard.patient.destroy');
     });
 
-
+    Route::middleware('auth:admin')->controller(RecieptAccountController::class)->prefix('promissory')
+    ->group(function(){
+        Route::get('/','index')->name('dashboard.finance_promissory.index');
+        Route::get('/create','create')->name('dashboard.finance_promissory.create');
+        Route::post('/','store')->name('dashboard.finance_promissory.store');
+        Route::get('/edit/{receiept_account_id}','edit')->name('dashboard.finance_promissory.edit');
+        Route::put('/','update')->name('dashboard.finance_promissory.update');
+        Route::delete('/','destroy')->name('dashboard.finance_promissory.destroy');
+    });
     
     require __DIR__.'/auth.php';
 });
 
 
+// livewire ;
 Route::get('{lang}/groupservices', function () {
      return view('livewire.include-group-services');
  })
  ->middleware('auth:admin')
  ->name('dashboard.group-services.index');
 
-
+Route::get('{lang}/single_invoice',function(){
+    return view('livewire.single-invoices.include-single-invoices');
+})
+->middleware('auth:admin')
+->name('dashboard.single-invoices.index');
