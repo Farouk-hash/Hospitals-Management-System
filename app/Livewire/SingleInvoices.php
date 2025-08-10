@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App;
 use App\Models\Dashboard\Doctor;
 use App\Models\Dashboard\FundAccount;
 use App\Models\Dashboard\Patient;
@@ -92,7 +93,8 @@ class SingleInvoices extends Component
                 'tax_rate' => $this->tax_rate,
                 'tax_amount' => $this->tax_amount,
                 'total_price' => $this->total_price,
-                'payment_type_id'=>$this->payment_type_id
+                'payment_type_id'=>$this->payment_type_id,
+                'invoices_id'=> 1 // uncompleted invoice ;
             ];
             if($this->updated){
                 $single_invoice = SingleInvoiceModel::findOrFail($this->invoice_id);
@@ -158,6 +160,21 @@ class SingleInvoices extends Component
         SingleInvoiceModel::destroy($invoice_id);
         $this->showTable = true ; 
     }
+
+    public function print($invoice_id){
+        $singleInvoice = SingleInvoiceModel::with(['service','doctor','section','patient'])->findOrFail($invoice_id);   
+        return redirect()->route('dashboard.single-invoices.print',
+    [
+        'service_price'=>$singleInvoice->service_price , 'discount'=>$singleInvoice->discount , 
+        'subtotal'=>$singleInvoice->subtotal , 'tax_rate'=>$singleInvoice->tax_rate , 
+        'tax_amount'=>$singleInvoice->tax_amount , 'total_price'=>$singleInvoice->discount , 
+        'patient'=>$singleInvoice->patient->name ?? $singleInvoice->patient->translations->first()->name , 
+        'service'=>$singleInvoice->service->name ?? $singleInvoice->service->translations->first()->name , 
+        'doctor'=>$singleInvoice->doctor->name ?? $singleInvoice->doctor->translations->first()->name , 
+        'section'=>$singleInvoice->section->name ?? $singleInvoice->section->translations->first()->name , 
+    ]);
+
+    }
     public function render()
     {
         $doctors = Doctor::all();
@@ -165,6 +182,7 @@ class SingleInvoices extends Component
         $invoices = SingleInvoiceModel::all();
         $patients = Patient::all();
         $paymentsTypes = PaymentTypes::all();
+        
         return 
         view('livewire.Single-Invoices.single-invoices',
         [

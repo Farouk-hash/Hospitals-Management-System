@@ -37,5 +37,13 @@ return [
    'change_password'=>'تغيير المرور',
    'new_password'=>'كلمه مرور جديده',
    'confirm_password'=>'تأكيد كلمه المرور',
-   'back'=>'رجوع'
+   'back'=>'رجوع' , 
+
+
+   'diagnostic'=>'تشخيص',
+   'add_diagnostic'=>'اضافه تشخيص',
+   'diagnostic_drugs'=>'الادويه',
+   'diagnostic_notes'=>'الملاحظات',
+   'all_diagnostics'=>'جميع التشخصيات',
+   'no_diagnostic'=>'لا يوجد تشخصيات حاليا'
 ];

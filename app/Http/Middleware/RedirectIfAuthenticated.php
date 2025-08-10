@@ -18,13 +18,20 @@ class RedirectIfAuthenticated
     public function handle(Request $request, Closure $next, string ...$guards): Response
     {
         $guards = empty($guards) ? [null] : $guards;
+        // Define the redirect paths for each guard
+        $redirectPaths = [
+            'admin' => RouteServiceProvider::ADMIN,
+            'doctor' => RouteServiceProvider::DOCTOR,
+            'xray_employee'=>RouteServiceProvider::RAY_EMPLOYEE,
+            'web' => RouteServiceProvider::HOME, // default web guard
+        ];
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::ADMIN);
+                $redirectPath = $redirectPaths[$guard] ?? RouteServiceProvider::HOME;
+                return redirect($redirectPath);
             }
         }
-
         return $next($request);
     }
 }

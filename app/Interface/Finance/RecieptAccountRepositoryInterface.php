@@ -2,7 +2,6 @@
 
 namespace App\Interface\Finance;
 
-use App\Http\Requests\InsuranceRequest;
 use Illuminate\Http\Request;
 
 interface RecieptAccountRepositoryInterface
@@ -13,4 +12,5 @@ interface RecieptAccountRepositoryInterface
     public function edit(int $receiept_account_id);
     public function update(Request $request);
     public function destroy(Request $request);
+    public function show(int $receiept_account_id);
 }

@@ -8,16 +8,30 @@ use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    public function index(){
+   
+    public function user_index(){
         if(Auth::guard('web')->check()){
-            $guard = 'web';
-        }elseif(Auth::guard('admin')->check()){
-            $guard = 'admin';
-        }else{
-            abort(500);
+            return view('dashboard.index_users');
         }
-        $view = ($guard == 'admin') ? "admins" : "users";
-        $view = 'dashboard.index_'.$view;
-        return view($view );
+        abort(500);
+    }
+    public function admin_index(){
+        if(Auth::guard('admin')->check()){
+            return view('dashboard.index_admins');
+        }
+        abort(500);
+    }
+    public function doctor_index(){
+        if(Auth::guard('doctor')->check()){
+            return view('doctors_dashboard.index');
+        }
+        abort(500);
+    }
+
+    public function xrayemployee_index(){
+        if(Auth::guard('xray_employee')->check()){
+            return view('dasboard_rays_employees.index');
+        }
+        abort(500);
     }
 }

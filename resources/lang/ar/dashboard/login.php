@@ -15,5 +15,7 @@ return [
     'create_account' => 'إنشاء حساب',
     'enter_your_email'=>'ادخل ايميلك',
     'enter_your_password'=>'ادخل كلمه المرور',
-    'failed'=>'خطأ في الايميل او الباسورد'
+    'failed'=>'خطأ في الايميل او الباسورد' , 
+    'doctor'=>'طبيب',
+    'xray_employee'=>'موظف اشعه'
 ];

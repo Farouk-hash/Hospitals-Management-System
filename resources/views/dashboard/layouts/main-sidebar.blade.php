@@ -86,6 +86,7 @@
 							<li><a class="slide-item" href="{{ route('dashboard.group-services.index',['lang' => app()->getLocale()]) }}">{{__('dashboard/services_trans.group_services_title')}}</a></li>
 							<li><a class="slide-item" href="{{ route('dashboard.insurance.index') }}">{{__('dashboard/insurance_trans.insurance_title')}}</a></li>
 							<li><a class="slide-item" href="{{ route('dashboard.ambulance.index') }}">{{__('dashboard/ambulance_trans.title')}}</a></li>
+							<li><a class="slide-item" href="{{ route('dashboard.employees.xrays.index') }}">{{__('dashboard/employees.xray-title')}}</a></li>
 
 
 						</ul>
@@ -121,9 +122,8 @@
 							<span class="side-menu__label">{{__('dashboard/finance_trans.title')}}</span><i class="angle fe fe-chevron-down"></i></a>
 						<ul class="slide-menu">
 							<li><a class="slide-item" href="{{ route('dashboard.finance_promissory.index') }}">{{__('dashboard/finance_trans.promissory_bond_title')}}</a></li>
+							<li><a class="slide-item" href="{{ route('dashboard.finance_payment_account.index') }}">{{__('dashboard/finance_trans.payment_account_title')}}</a></li>
 
-							
-							
 						</ul>
 					</li>
 					

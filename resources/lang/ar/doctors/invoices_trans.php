@@ -1,0 +1,33 @@
+<?php
+return [
+    'title'=>'الكشوفات',
+    'diagnostic_review'=>'مراجعه التشخيص',
+    'add_diagnostic_review'=>'اضافه مراجعه للتشخيص',
+    'x_ray'=>'الاشعه',
+    'reviews'=>'المراجعات',
+    'no_reviews'=>'لا توجد مراجعات',
+    'select_diagnostic'=>'اختيار تشخيص',
+    'lab'=>'المعمل',
+
+    'single_invoice_title'=>'فاتوره مفرده',
+    'add_single_invoice'=>'اضافه فاتوره مفرده',
+    'section'=>'القسم',
+    'Doctors'=>'الاطباء',
+    'Patient_Name'=>'اسم المريض',
+    'payment_type'=>'طريقه الدفع',
+    'Services'=>'الخدمات',
+    'service_price'=>'سعر الخدمه',
+    'service_name'=>'الخدمه المقدمه',
+    'Total_price'=>'اجمالي المبلغ',
+    'discount'=>'قيمه الخصم',
+    'subtotal'=>'المبلغ بعد الخصم',
+    'tax_rate'=>'نسبه الضريبه',
+    'tax_amount'=>'قيمه الضريبه',
+    'submit'=>'تأكيد',
+    'Created_At' => 'الإنشاء',
+    'Updated_At' => 'التحديث',
+    'Actions' => 'الإجراءات',
+    'edit' => 'تعديل',
+    'delete' => 'حذف',
+    'print_invoice'=>'طباعه فاتوره مفرده'
+];

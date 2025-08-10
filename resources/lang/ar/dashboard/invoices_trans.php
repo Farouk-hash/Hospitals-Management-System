@@ -5,6 +5,7 @@ return [
     'add_single_invoice'=>'اضافه فاتوره مفرده',
     'section'=>'القسم',
     'Doctors'=>'الاطباء',
+    'status'=>'الحاله',
     'Patient_Name'=>'اسم المريض',
     'payment_type'=>'طريقه الدفع',
     'Services'=>'الخدمات',
@@ -21,4 +22,5 @@ return [
     'Actions' => 'الإجراءات',
     'edit' => 'تعديل',
     'delete' => 'حذف',
+    'print_invoice'=>'طباعه فاتوره مفرده'
 ];

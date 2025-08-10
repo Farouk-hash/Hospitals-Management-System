@@ -32,6 +32,8 @@
 
                 <th>{{ __('dashboard/invoices_trans.Created_At') }}</th>
                 <th>{{ __('dashboard/invoices_trans.Updated_At') }}</th>
+                <th>{{ __('dashboard/invoices_trans.status') }}</th>
+
                 <th>{{ __('dashboard/invoices_trans.Actions') }}</th>
 
             </tr>
@@ -54,9 +56,20 @@
                     <td>{{ $invoice->created_at->diffForHumans() }}</td>
                     <td>{{ $invoice->updated_at->diffForHumans() }}</td>
 
+                    <td>{{ 
+                    
+                    $invoice->invoiceStatus->translation ?  $invoice->invoiceStatus->translation->name :
+                    $invoice->invoiceStatus->translations()->first()->name
+                    
+                    }}</td>
+
                     <td style="display: flex; justify-content: center; gap: 2px;">
                         <button wire:click="edit({{ $invoice->id }})" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button>
-                        <button wire:click="destroy({{ $invoice->id }})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                        <button wire:click="destroy({{ $invoice->id }})" class="btn btn-danger btn-sm">
+                            <i class="fa fa-trash"></i></button>
+                        <button wire:click="print({{ $invoice->id }})" class="btn btn-secondary btn-sm">
+                            <i class="fa fa-print"></i></button>
+
                     </td>
                 </tr>
             @endforeach

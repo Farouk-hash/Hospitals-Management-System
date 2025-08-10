@@ -2,6 +2,9 @@
 
 namespace App\Models\Dashboard;
 
+use App\Models\Doctors_Panel\Diagnostic;
+use App\Models\Doctors_Panel\InvoiceStatus;
+use App\Models\Doctors_Panel\Lab;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,7 +25,14 @@ class SingleInvoice extends Model
         'tax_rate',
         'tax_amount',
         'total_price',
+        'invoices_id'
     ];
+     public function diagnostics(){
+        return $this->hasMany(Diagnostic::class , 'invoice_id' , 'id');
+    }
+    public function labs(){
+        return $this->hasMany(Lab::class , 'invoice_id','id');
+    }
     public function doctor()
     {
         return $this->belongsTo(Doctor::class);
@@ -43,4 +53,8 @@ class SingleInvoice extends Model
     public function payment_type(){
         return $this->belongsTo(PaymentTypes::class , 'payment_type_id');
     }
+    public function invoiceStatus(){
+        return $this->belongsTo(InvoiceStatus::class , 'invoices_id');
+    }
+   
 }

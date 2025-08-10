@@ -86,6 +86,11 @@
                                                                 href="#delete{{ $receipt->id }}">
                                                                 <i class="las la-trash"></i> {{ __('dashboard/finance_trans.delete') }}
                                                                 </a>
+
+                                                                <a class="dropdown-item text-secondary" href="{{ route('dashboard.finance_promissory.show' , [$receipt->id]) }}">
+                                                                    <i class="las la-print"></i> {{ __('dashboard/finance_trans.print') }}
+                                                                </a>
+                                                               
                                                             </div>
                                                         </div>
                                                     </td>

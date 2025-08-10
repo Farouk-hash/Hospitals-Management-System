@@ -6,6 +6,7 @@ return [
     'select_login' => 'Select your login',
     'user' => 'User',
     'admin' => 'Admin',
+    'doctor'=>'Doctor',
     'login_as' => 'Login as',
     'email' => 'Email',
     'password' => 'Password',

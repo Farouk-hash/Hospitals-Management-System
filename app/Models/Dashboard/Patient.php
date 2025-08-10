@@ -26,4 +26,15 @@ class Patient extends Model
         // Hash phone_number and assign to password
         $this->attributes['password'] = Hash::make($value);
     }
+    public function singleInvoices(){
+        return $this->hasMany(SingleInvoice::class , 'patient_id');
+    }
+    // promissory-bond [سندات القبض]
+    public function receieptAccount(){
+        return $this->hasMany(RecieptAccount::class , 'patient_id');
+    }
+    // payment-account [سندات الصرف]
+    public function paymentAccount(){
+        return $this->hasMany(PaymentAccount::class , 'patient_id');
+    }
 }

@@ -14,4 +14,9 @@ return [
     'add_patient' => 'إضافة مريض',
     'submit' => 'تأكيد',
     'delete_patient' => 'حذف المريض',
+    'patient_details'=>'تفاصيل المريض',
+    'patient_data_details'=>'بيانات المريض',
+    'patient_promissory_details'=>'بيانات سندات القبض',
+    'patient_payment_details'=>'بيانات سندات الدفع',
+    'patient_invoices'=>'الفواتير'
 ];

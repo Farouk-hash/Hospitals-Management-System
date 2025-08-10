@@ -17,6 +17,43 @@ class PatientRepository implements PatientRepositoryInterface
         return view('dashboard.patients.index',compact('patients'));
     }
 
+    public function show(int $patient_id){
+        $patient = Patient::with(['singleInvoices','receieptAccount','paymentAccount'])->findOrFail($patient_id);
+        
+        $invoices = $patient->singleInvoices->where('payment_type_id', 2)
+        ->map(function($invoice){
+            return [
+                'amount'=>$invoice->total_price , 
+                'notes'=>$invoice->service->name ?? $invoice->service->translations->first()->name ,
+                'type'=>'invoice' , 
+                'created_at'=>$invoice->created_at
+            ];
+        }); 
+        $receiepts = $patient->receieptAccount
+        ->map(function($receiept){
+            return [
+                'amount'=>$receiept->debit , 
+                'notes'=>$receiept->notes ,
+                'type'=>'promissory_bond_title' , 
+                'created_at'=>$receiept->created_at
+            ];
+        });  
+        $paymentAccounts = $patient->paymentAccount ->map(function($paymentAccount){
+        return [
+                'amount'=>$paymentAccount->credit , 
+                'notes'=>$paymentAccount->notes ,
+                'type'=>'payment_account_title' , 
+                'created_at'=>$paymentAccount->created_at
+            ];
+        });   // PAYMENT BONDS [CREDIT]; 
+
+        $allTransactions = collect()
+        ->merge($invoices)
+        ->merge($receiepts)
+        ->merge($paymentAccounts);
+
+        return view('dashboard.patients.show',compact('patient' , 'allTransactions'));
+    }
     public function create(){
         $gender = Gender::all();
         return view('dashboard.patients.add' , compact('gender'));

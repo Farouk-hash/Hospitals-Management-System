@@ -39,9 +39,14 @@
 												<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 													{{__('dashboard/login.select_login')}}
 												</button>
+
+												{{-- LOGIN AS DOCTOR , ADMIN , USER  --}}
 												<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
 													<button class="dropdown-item login-selector" data-type="web" type="button">{{__('dashboard/login.user')}}</button>
 													<button class="dropdown-item login-selector" data-type="admin" type="button">{{__('dashboard/login.admin')}}</button>
+													<button class="dropdown-item login-selector" data-type="doctor" type="button">{{__('dashboard/login.doctor')}}</button>
+													<button class="dropdown-item login-selector" data-type="xray_employee" type="button">{{__('dashboard/login.xray_employee')}}</button>
+
 												</div>
 											</div>
 

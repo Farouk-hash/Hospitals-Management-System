@@ -9,6 +9,6 @@ class PatientAccount extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['single_invoice_id','reciept_id','debit','credit'];
+    protected $fillable = ['single_invoice_id','reciept_id','payment_account_id','debit','credit'];
     protected $table = 'patient_account';
 }

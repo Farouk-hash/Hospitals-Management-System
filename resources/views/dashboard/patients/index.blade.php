@@ -85,6 +85,10 @@
                                                     
                                                     <td>
                                                         <div style="display: flex; justify-content: center; gap: 2px;">
+                                                            <a class="modal-effect btn btn-sm btn-primary" data-effect="effect-scale"
+                                                                href="{{route('dashboard.patient.show' , [$patient->id])}}">
+                                                                <i class="las la-eye"></i>
+                                                            </a>
                                                             <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"
                                                             data-toggle="modal" href="#edit{{$patient->id}}">
                                                                 <i class="las la-pen"></i>
@@ -93,6 +97,7 @@
                                                             data-toggle="modal" href="#delete{{$patient->id}}">
                                                                 <i class="las la-trash"></i>
                                                             </a>
+
                                                         </div>
                                                     </td>
 

@@ -16,7 +16,9 @@ class PatientController extends Controller
     {
         return $this->PatientRepositoryInterface->index();
     }
-
+    public function show(int $patient_id){
+        return $this->PatientRepositoryInterface->show($patient_id);
+    }
     public function create(){
         return $this->PatientRepositoryInterface->create();
     }

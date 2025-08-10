@@ -19,6 +19,10 @@ class RecieptAccountRepository implements RecieptAccountRepositoryInterface
         return view('dashboard.PromissoryBond.index',compact('recieptAccounts'));
     }
 
+    public function show(int $receiept_account_id){
+        $recieptAccounts = RecieptAccount::with('patient')->findOrFail($receiept_account_id);
+        return view('dashboard.PromissoryBond.print', compact('recieptAccounts'));
+    }
     public function create(){
         $singleInvoicesPromissories = SingleInvoice::where('payment_type_id',2)->get();
         return view('dashboard.PromissoryBond.create' , compact('singleInvoicesPromissories'));

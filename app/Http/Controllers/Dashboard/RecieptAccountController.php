@@ -30,4 +30,7 @@ class RecieptAccountController extends Controller
     public function destroy(Request $request){
         return $this->RecieptAccountRepositoryInterface->destroy($request);
     }
+    public function show(int $receiept_account_id){
+        return $this->RecieptAccountRepositoryInterface->show($receiept_account_id);
+    }
 }
