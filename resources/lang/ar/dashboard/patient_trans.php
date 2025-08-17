@@ -18,5 +18,8 @@ return [
     'patient_data_details'=>'بيانات المريض',
     'patient_promissory_details'=>'بيانات سندات القبض',
     'patient_payment_details'=>'بيانات سندات الدفع',
-    'patient_invoices'=>'الفواتير'
+    'patient_invoices'=>'الفواتير',
+    'edit'=>'تعديل',
+    'delete'=>'حذف',
+    'show_images'=>'اظهار الصور'
 ];

@@ -17,5 +17,6 @@ return [
     'enter_your_password'=>'ادخل كلمه المرور',
     'failed'=>'خطأ في الايميل او الباسورد' , 
     'doctor'=>'طبيب',
-    'xray_employee'=>'موظف اشعه'
+    'xray_employee'=>'موظف اشعه',
+    'patient'=>'مريض'
 ];

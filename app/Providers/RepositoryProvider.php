@@ -9,6 +9,7 @@ use App\Interface\Finance\RecieptAccountRepositoryInterface;
 use App\Interface\Insurance\InsuranceRepositoryInterface;
 use App\Interface\Interface_Doctors_Panel\DiagnosticRepositoryInfterface;
 use App\Interface\Interface_Doctors_Panel\InvoicesRepositoryInterface;
+use App\Interface\Interface_Doctors_Panel\raysRepostioryInterface;
 use App\Interface\Patients\PatientRepositoryInterface;
 use App\Interface\xRays\employeeRepositoryInterface;
 use App\Repository\Ambulance\AmbulanceRepository;
@@ -21,6 +22,7 @@ use App\Repository\Finance\RecieptAccountRepository;
 use App\Repository\Patients\PatientRepository;
 use App\Repository\Repository_Doctors_Panel\DiagnosticRepository;
 use App\Repository\Repository_Doctors_Panel\InvoicesRepository;
+use App\Repository\Repository_Doctors_Panel\raysRepository;
 use App\Repository\Sections\SectionRepository;
 use App\Repository\Services\ServicesRepository;
 use App\Repository\xRays\employeeRepository;
@@ -47,6 +49,9 @@ class RepositoryProvider extends ServiceProvider
         // DOCTORS ; 
         $this->app->bind(InvoicesRepositoryInterface::class , InvoicesRepository::class);
         $this->app->bind(DiagnosticRepositoryInfterface::class , DiagnosticRepository::class);
+
+        // xRAYS-EMPLOYEES ; 
+        $this->app->bind(raysRepostioryInterface::class , raysRepository::class);
     }
 
     /**

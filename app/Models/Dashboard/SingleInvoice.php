@@ -30,9 +30,7 @@ class SingleInvoice extends Model
      public function diagnostics(){
         return $this->hasMany(Diagnostic::class , 'invoice_id' , 'id');
     }
-    public function labs(){
-        return $this->hasMany(Lab::class , 'invoice_id','id');
-    }
+  
     public function doctor()
     {
         return $this->belongsTo(Doctor::class);

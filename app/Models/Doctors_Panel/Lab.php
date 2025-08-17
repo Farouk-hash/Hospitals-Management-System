@@ -10,8 +10,11 @@ class Lab extends Model
 {
     use HasFactory;
     protected $table = 'lab';
-    protected  $fillable  = ['notes','invoice_id'];
-    public function invoice(){
-        return $this->belongsTo(SingleInvoice::class , 'invoice_id');
+    protected  $fillable  = ['notes','diagnostic_id' , 'lab_status_id'];
+    public function diagnostic(){
+        return $this->belongsTo(Diagnostic::class , 'diagnostic_id');
+    }
+    public function status(){
+        return $this->belongsTo(InvoiceStatus::class , 'lab_status_id');
     }
 }

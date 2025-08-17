@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Doctors\DiagnosticController;
 use App\Http\Controllers\Doctors\InvoicesController;
+use App\Http\Controllers\Doctors\RaysController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\DashboardController;
 
@@ -23,9 +24,11 @@ Route::group(
         Route::post('/','store')->name('doctors_dashboard.diagnostic.store');
         Route::post('/createReview','store_diagnostic_review')->name('doctors_dashboard.diagnostic_review.store');
         Route::post('/createLab' , 'store_diagnostic_lab')->name('doctors_dashboard.diagnostic_lab.store');
-        
+        Route::post('/createRay' , 'store_diagnostic_ray')->name('doctors_dashboard.diagnostic_ray.store');
         Route::get('/show/{patient_id}' , 'show')->name('doctors_dashboard.diagnostic.show');
+        Route::get('/show/rays/{ray_id}' , 'show_ray_images')->name('doctors_dashboard.diagnostic.show_ray_images');
     });
+ 
 
 });
 

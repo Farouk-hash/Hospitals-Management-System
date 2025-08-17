@@ -8,6 +8,7 @@ use App\Models\Dashboard\Doctor;
 use App\Models\Dashboard\Image;
 use App\Models\Dashboard\Section;
 use App\Traits\ValidateDoctor;
+use Exception;
 use Illuminate\Http\Request;
 use App\Traits\UploadingImageTraits;
 use Illuminate\Support\Facades\DB;
@@ -97,32 +98,41 @@ class DoctorRepository implements DoctorRepositoryInterface{
         return view('dashboard.doctors.edit',compact('doctor','sections','appointments'));
     }
     public function update(Request $request){
-        $validated = $this->validateDoctor($request , ['password']);
-        $doctor_id = $request->input('id');
-        // dd($validated);
-        $doctor = Doctor::findOrFail($doctor_id);
-        $doctor->update([
-        'email'=>$validated['email'],
-        'phone'=>$validated['phone'],
-        'section_id'=>$validated['section_id']]);
-        $doctor->name = $validated['name'];
-        $appointments_array = $validated['appointments'];
-        $doctor->appointments()->sync($appointments_array);
-        $doctor->save();
-        if($request->hasFile('photo')){
-            // remove old one if exists ; 
-            if($doctor->image){
-                $this->deleteImage($doctor->image->url, 'Doctors' , 'upload_image' 
-            , $doctor_id , 'App\Models\Dashboard\Doctor' );
-            }
-            // create new one ; 
-            $this->uploadimage($request , 'photo' , 'Doctors' , 'upload_image', $doctor->id , 'App\Models\Dashboard\Doctor');
+        DB::beginTransaction();
+        try{
+            $validated = $this->validateDoctor($request , ['password']);
+            $doctor_id = $request->input('id');
+            // dd($validated);
+            $doctor = Doctor::findOrFail($doctor_id);
+            $doctor->update([
+            'email'=>$validated['email'],
+            'phone'=>$validated['phone'],
+            'section_id'=>$validated['section_id']]);
+            $doctor->name = $validated['name'];
+            $appointments_array = $validated['appointments'];
+            $doctor->appointments()->sync($appointments_array);
+            $doctor->save();
 
-        }
+            if($request->hasFile('photo')){
+                // remove old one if exists ; 
+                if($doctor->image){
+                    $this->deleteImage([$doctor->image->url], 'Doctors' , 'upload_image' 
+                , $doctor_id , 'App\Models\Dashboard\Doctor' );
+                }
+                // create new one ; 
+                $this->uploadimage($request , 'photo' , 'Doctors' , 'upload_image', $doctor->id , 'App\Models\Dashboard\Doctor');
+
+            }
+        DB::commit();
         $url =session('section_id') ? 
             route('dashboard.sections.show',session('section_id')) : route('dashboard.doctors.index');
-
+        
         return redirect($url );
+        }catch(Exception $e){
+            DB::rollabk();
+            dd($e);
+        }
+       
     }
 
     public function status(Request $request){

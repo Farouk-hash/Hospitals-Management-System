@@ -23,9 +23,13 @@ return [
             'driver' => 'session',
             'provider' => 'doctors',
         ],
-        'xray_employee' => [
+        'ray_employee' => [
             'driver' => 'session',
-            'provider' => 'xray_employee',
+            'provider' => 'ray_employee',
+        ],
+        'patient' => [
+            'driver' => 'session',
+            'provider' => 'patient',
         ],
     ],
 
@@ -45,9 +49,13 @@ return [
             'driver'=>'eloquent',
             'model'=>App\Models\Dashboard\Doctor::class,
         ],
-        'xray_employee'=>[
+        'ray_employee'=>[
             'driver'=>'eloquent',
             'model'=>App\Models\Dashboard\xRayEmployee::class,
+        ],
+        'patient'=>[
+            'driver'=>'eloquent',
+            'model'=>App\Models\Dashboard\Patient::class,
         ]
     ],
 

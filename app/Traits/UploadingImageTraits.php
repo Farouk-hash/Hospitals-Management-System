@@ -18,18 +18,47 @@ trait UploadingImageTraits
      * @param string $imageable_type
      * @return string|null
      */
-    public function uploadimage(Request $request , $input_name, $foldername , $disk ,$imageable_id , $imageable_type ){
-        if($request->hasFile($input_name)){
-            $file = $request->file($input_name);
-            $name = Str::slug($request->input('name'));
-            $fileName = $name. '.' . $file->getClientOriginalExtension();
+    public function uploadimage(
+    Request $request,
+    $input_name,
+    $foldername,
+    $disk,
+    $imageable_id,
+    $imageable_type,
+    $request_input_variable = "name"
+    ) {
+        
+        if ($request->hasFile($input_name)) {
+            $files = $request->file($input_name);
 
-            // insert Image
-            Image::Create(['url'=>$fileName , 'imageable_id'=>$imageable_id , 'imageable_type'=>$imageable_type]);
-            return $request->file($input_name)->storeAs($foldername, $fileName, $disk);
+            // Ensure $files is always an array
+            if (!is_array($files)) {
+                $files = [$files];
+            }
+
+            $name = Str::slug($request->input($request_input_variable));
+
+            foreach ($files as $index => $file) {
+                // Make filename unique if multiple files
+                $fileName = $name . '-' . time() . '-' . $index . '.' . $file->getClientOriginalExtension();
+
+                // Insert into images table
+                Image::create([
+                    'url'            => $fileName,
+                    'imageable_id'   => $imageable_id,
+                    'imageable_type' => $imageable_type
+                ]);
+
+                // Store file
+                $file->storeAs($foldername, $fileName, $disk);
+            }
+
+            return true;
         }
-        return null ; 
+
+        return null;
     }
+
     
     /**
      * Summary of deleteImage
@@ -39,22 +68,29 @@ trait UploadingImageTraits
      * @param int $imageable_id
      * @return bool
      */
-    public function deleteImage($file_name, $folderName , $disk , $imageable_id  , $imageable_type)
+    public function deleteImage(array $file_names, $folderName, $disk, $imageable_id, $imageable_type)
     {
-        $file_path = $folderName . '/' . $file_name;
+        $deletedAll = true;
 
-        if (Storage::disk($disk)->exists($file_path)) {
-            
-            $deleted = Storage::disk($disk)->delete($file_path);
+        foreach ($file_names as $file_name) {
+            $file_path = $folderName . '/' . $file_name;
 
-            Image::where('imageable_id', $imageable_id)
-                ->where('imageable_type', $imageable_type)
-                ->delete();
+            if (Storage::disk($disk)->exists($file_path)) {
+                $deleted = Storage::disk($disk)->delete($file_path);
 
-
-            return $deleted;
+                if ($deleted) {
+                    Image::where('imageable_id', $imageable_id)
+                        ->where('imageable_type', $imageable_type)
+                        ->delete();
+                } else {
+                    $deletedAll = false;
+                }
+            } else {
+                $deletedAll = false;
+            }
         }
 
-        return false;
+        return $deletedAll;
     }
+
 }

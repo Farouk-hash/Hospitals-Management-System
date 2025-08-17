@@ -8,7 +8,7 @@ return [
     'no_reviews'=>'لا توجد مراجعات',
     'select_diagnostic'=>'اختيار تشخيص',
     'lab'=>'المعمل',
-
+    
     'single_invoice_title'=>'فاتوره مفرده',
     'add_single_invoice'=>'اضافه فاتوره مفرده',
     'section'=>'القسم',

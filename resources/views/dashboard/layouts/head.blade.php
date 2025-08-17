@@ -1,5 +1,5 @@
 <!-- Title -->
-<title>@yield('title' ?? APP::APP_NAME())</title>
+<title>{{config('app.name')}}</title>
 <!-- Favicon -->
 <link rel="icon" href="{{URL::asset('dashboard/img/brand/favicon.png')}}" type="image/x-icon"/>
 <!-- Icons css -->
@@ -17,6 +17,9 @@
 <link href="{{URL::asset('dashboard/plugins/datatable/css/responsive.dataTables.min.css')}}" rel="stylesheet">
 <link href="{{URL::asset('dashboard/plugins/select2/css/select2.min.css')}}" rel="stylesheet">
 
+ <meta name="csrf-token" content="{{ csrf_token() }}">
+<!-- Scripts -->
+@vite(['resources/css/app.css', 'resources/js/app.js'])
 
 @if(App::getLocale() == 'ar')
     <!-- Sidemenu css -->

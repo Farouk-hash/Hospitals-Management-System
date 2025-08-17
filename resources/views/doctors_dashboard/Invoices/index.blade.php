@@ -82,29 +82,38 @@
                                                 </button>
 
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $invoice->id }}">
-                                                    <a class="dropdown-item modal-effect text-primary" 
+                                                    
+                                                    <a class="dropdown-item modal-effect text-success" 
                                                     data-effect="effect-scale"  
                                                     data-toggle="modal" href="#add{{$invoice->id}}">
-                                                        
-                                                    <i class="las la-pen"></i> {{ __('dashboard/doctors_trans.diagnostic') }}
+                                                        <i class="las la-pen text-success"></i> {{ __('dashboard/doctors_trans.diagnostic') }}
                                                     </a>
 
-                                                    <a class="dropdown-item modal-effect text-warning" data-effect="effect-scale"
-                                                    data-toggle="modal"
-                                                    href="#addreview{{$invoice->id}}">
-                                                        <i class="las la-pen"></i> {{ __('doctors/invoices_trans.diagnostic_review') }}
+                                                    <a class="dropdown-item modal-effect text-danger" 
+                                                    data-effect="effect-scale"
+                                                    data-toggle="modal" href="#addreview{{$invoice->id}}">
+                                                        <i class="las la-pen text-danger"></i> {{ __('doctors/invoices_trans.diagnostic_review') }}
                                                     </a>
 
-                                                    <a class="dropdown-item modal-effect text-secondary" data-effect="effect-scale"
-                                                    data-toggle="modal"
-                                                    href="#addlab{{$invoice->id}}">
-                                                        <i class="las la-pen"></i> {{ __('doctors/invoices_trans.lab') }}
+                                                    <a class="dropdown-item modal-effect text-info" 
+                                                    data-effect="effect-scale"
+                                                    data-toggle="modal" href="#addlab{{$invoice->id}}">
+                                                        <i class="las la-pen text-info"></i> {{ __('doctors/invoices_trans.lab') }}
                                                     </a>
-                                                    
+
+                                                    <a class="dropdown-item modal-effect text-primary" 
+                                                    data-effect="effect-scale"
+                                                    data-toggle="modal" href="#addray{{$invoice->id}}">
+                                                        <i class="las la-pen text-primary"></i> {{ __('doctors/invoices_trans.x_ray') }}
+                                                    </a>
+
+
                                                 </div>
                                                 @include('doctors_dashboard.Invoices.create_diagnostic')
                                                 @include('doctors_dashboard.Invoices.create_diagnostic_review')
                                                 @include('doctors_dashboard.Invoices.create_lab')
+                                                @include('doctors_dashboard.Invoices.create_ray')
+
 
 
                                             </div>    

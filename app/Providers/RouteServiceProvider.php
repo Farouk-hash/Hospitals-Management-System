@@ -11,11 +11,12 @@ use Illuminate\Support\Facades\Route;
 class RouteServiceProvider extends ServiceProvider
 {
     
-    public const HOME = '/dashboard/users';
+    public const WEB = '/dashboard/users';
     public const ADMIN = '/dashboard/admins';
     public const DOCTOR = '/dashboard/doctors';
     public const RAY_EMPLOYEE = '/dashboard/xrayemployee';
 
+    public const PATIENT = '/dashboard/patient';
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
@@ -49,6 +50,16 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/raysEmployees.php'));
+
+            // FOR PATIENTS ;
+            Route::middleware('web')
+                ->namespace($this->namespace)
+                ->group(base_path('routes/patient.php'));
+            
+            // FOR CHAT ;
+            Route::middleware('web')
+                ->namespace($this->namespace)
+                ->group(base_path('routes/chat.php'));
         });
     }
     

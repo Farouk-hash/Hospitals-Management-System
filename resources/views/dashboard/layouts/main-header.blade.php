@@ -73,6 +73,7 @@
 									</div>
 								</form>
 							</div>
+
 							<div class="dropdown nav-item main-header-message ">
 								<a class="new nav-link" href="#"><svg xmlns="http://www.w3.org/2000/svg" class="header-icon-svgs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg><span class=" pulse-danger"></span></a>
 								<div class="dropdown-menu">
@@ -81,7 +82,7 @@
 											<h6 class="dropdown-title mb-1 tx-15 text-white font-weight-semibold">Messages</h6>
 											<span class="badge badge-pill badge-warning mr-auto my-auto float-left">Mark All Read</span>
 										</div>
-										<p class="dropdown-title-text subtext mb-0 text-white op-6 pb-0 tx-12 ">You have 4 unread messages</p>
+										{{-- <p class="dropdown-title-text subtext mb-0 text-white op-6 pb-0 tx-12 ">You have 4 unread messages</p> --}}
 									</div>
 									<div class="main-message-list chat-scroll">
 										<a href="#" class="p-3 d-flex border-bottom">
@@ -153,99 +154,48 @@
 									</div>
 								</div>
 							</div>
-							<div class="dropdown nav-item main-header-notification">
-								<a class="new nav-link" href="#">
-								<svg xmlns="http://www.w3.org/2000/svg" class="header-icon-svgs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg><span class=" pulse"></span></a>
+
+
+							<div class="dropdown nav-item main-header-notification notification-pusher">
+								<a class="new nav-link" id="notificationBell" href="#">
+								<svg xmlns="http://www.w3.org/2000/svg" class="header-icon-svgs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+								{{-- <span class=" pulse"></span> --}}
+								</a>
 								<div class="dropdown-menu">
 									<div class="menu-header-content bg-primary text-right">
 										<div class="d-flex">
 											<h6 class="dropdown-title mb-1 tx-15 text-white font-weight-semibold">Notifications</h6>
 											<span class="badge badge-pill badge-warning mr-auto my-auto float-left">Mark All Read</span>
 										</div>
-										<p class="dropdown-title-text subtext mb-0 text-white op-6 pb-0 tx-12 ">You have 4 unread Notifications</p>
+										<p class="dropdown-title-text subtext mb-0 text-white op-6 pb-0 tx-12 ">
+											You have {{App\Models\Events\Notifications::unread('admin')->count()}} Notifications
+										</p>
 									</div>
 									<div class="main-notification-list Notification-scroll">
-										<a class="d-flex p-3 border-bottom" href="#">
-											<div class="notifyimg bg-pink">
-												<i class="la la-file-alt text-white"></i>
-											</div>
-											<div class="mr-3">
-												<h5 class="notification-label mb-1">New files available</h5>
-												<div class="notification-subtext">10 hour ago</div>
-											</div>
-											<div class="mr-auto" >
-												<i class="las la-angle-left text-left text-muted"></i>
-											</div>
-										</a>
-										<a class="d-flex p-3" href="#">
-											<div class="notifyimg bg-purple">
-												<i class="la la-gem text-white"></i>
-											</div>
-											<div class="mr-3">
-												<h5 class="notification-label mb-1">Updates Available</h5>
-												<div class="notification-subtext">2 days ago</div>
-											</div>
-											<div class="mr-auto" >
-												<i class="las la-angle-left text-left text-muted"></i>
-											</div>
-										</a>
-										<a class="d-flex p-3 border-bottom" href="#">
-											<div class="notifyimg bg-success">
-												<i class="la la-shopping-basket text-white"></i>
-											</div>
-											<div class="mr-3">
-												<h5 class="notification-label mb-1">New Order Received</h5>
-												<div class="notification-subtext">1 hour ago</div>
-											</div>
-											<div class="mr-auto" >
-												<i class="las la-angle-left text-left text-muted"></i>
-											</div>
-										</a>
-										<a class="d-flex p-3 border-bottom" href="#">
-											<div class="notifyimg bg-warning">
-												<i class="la la-envelope-open text-white"></i>
-											</div>
-											<div class="mr-3">
-												<h5 class="notification-label mb-1">New review received</h5>
-												<div class="notification-subtext">1 day ago</div>
-											</div>
-											<div class="mr-auto" >
-												<i class="las la-angle-left text-left text-muted"></i>
-											</div>
-										</a>
-										<a class="d-flex p-3 border-bottom" href="#">
-											<div class="notifyimg bg-danger">
-												<i class="la la-user-check text-white"></i>
-											</div>
-											<div class="mr-3">
-												<h5 class="notification-label mb-1">22 verified registrations</h5>
-												<div class="notification-subtext">2 hour ago</div>
-											</div>
-											<div class="mr-auto" >
-												<i class="las la-angle-left text-left text-muted"></i>
-											</div>
-										</a>
-										<a class="d-flex p-3 border-bottom" href="#">
-											<div class="notifyimg bg-primary">
-												<i class="la la-check-circle text-white"></i>
-											</div>
-											<div class="mr-3">
-												<h5 class="notification-label mb-1">Project has been approved</h5>
-												<div class="notification-subtext">4 hour ago</div>
-											</div>
-											<div class="mr-auto" >
-												<i class="las la-angle-left text-left text-muted"></i>
-											</div>
-										</a>
+										{{-- Notifications Here --}}
+										@foreach (App\Models\Events\Notifications::unread('admin')->get() as $notification )
+											<a class="d-flex p-3 border-bottom" href="{{$notification->getRedirectUrl()}}">
+												<div class="mr-3">
+													<h5 class="notification-label mb-1">{{$notification->user_name}}</h5>
+													<div class="notification-message">{{$notification->message}}</div>
+													<div class="notification-subtext">{{$notification->created_at}}</div>
+												</div>
+											</a>
+										@endforeach
+									
 									</div>
-									<div class="dropdown-footer">
-										<a href="">VIEW ALL</a>
-									</div>
+									{{-- drop-down footer viewall div --}}
 								</div>
 							</div>
+
+
+
+
 							<div class="nav-item full-screen fullscreen-button">
 								<a class="new nav-link full-screen-link" href="#"><svg xmlns="http://www.w3.org/2000/svg" class="header-icon-svgs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-maximize"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></a>
 							</div>
+
+
 							<div class="dropdown main-profile-menu nav nav-item nav-link">
 								<a class="profile-user d-flex" href=""><img alt="" src="{{URL::asset('dashboard/img/faces/6.jpg')}}"></a>
 								<div class="dropdown-menu">
@@ -267,6 +217,7 @@
 									<a class="dropdown-item" href="{{ route('dashboard.signout') }}"><i class="bx bx-log-out"></i> Sign Out</a>
 								</div>
 							</div>
+
 							<div class="dropdown main-header-message right-toggle">
 								<a class="nav-link pr-0" data-toggle="sidebar-left" data-target=".sidebar-left">
 									<svg xmlns="http://www.w3.org/2000/svg" class="header-icon-svgs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
@@ -277,3 +228,96 @@
 				</div>
 			</div>
 <!-- /main-header -->
+<script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+<script>
+
+	// Counter initialized from backend
+	let count = {{ App\Models\Events\Notifications::unread('doctor')->count() }};
+
+	// DOM selectors
+	const counterText = document.querySelector('.notification-pusher .dropdown-title-text'); 
+	const notificationList = document.querySelector('.notification-pusher .main-notification-list'); 
+	const notificationBell = document.getElementById('notificationBell');
+
+	// Add pulse
+	function addPulse() {
+		if (!notificationBell.querySelector('.pulse')) {
+			const pulse = document.createElement('span');
+			pulse.classList.add('pulse');
+			notificationBell.appendChild(pulse);
+		}
+	}
+
+	// Remove pulse
+	function removePulse() {
+		const pulse = notificationBell.querySelector('.pulse');
+		if (pulse) pulse.remove();
+	}
+
+	// Listen for click to remove pulse
+	notificationBell.addEventListener('click', removePulse);
+    
+	const userId = {{ Auth::id() ?? 'null' }};
+
+	console.log('Checking Echo status...');
+    console.log('window.Echo:', window.Echo);
+    console.log('window.Pusher:', window.Pusher);
+	window.Echo.private('single-invoice' + userId).listen('.single-invoice-event', function(data) {
+		console.log('private channel work');
+		// Pulse effect
+		addPulse(); 
+
+		// Update counter
+		count++;
+		counterText.innerText = `You have ${count} Notifications`;
+
+		// Create notification item
+		const item = document.createElement('a');
+		const patientBaseUrl = "{{ url(app()->getLocale() . '/patient/show') }}/";
+		item.href = patientBaseUrl + data.patient_id;
+		item.classList.add('d-flex', 'p-3', 'border-bottom');
+
+		// Left section
+		const leftDiv = document.createElement('div');
+		leftDiv.classList.add('mr-3');
+
+		const title = document.createElement('h5');
+		title.classList.add('notification-label', 'mb-1');
+		title.innerText = data.username || 'New Notification';
+
+		const message = document.createElement('div');
+		message.classList.add('notification-message');
+		message.innerText = data.message || 'You have a new alert.';
+
+		const subtext = document.createElement('div');
+		subtext.classList.add('notification-subtext');
+		subtext.innerText = data.time || 'Just now';
+
+		leftDiv.appendChild(title);
+		leftDiv.appendChild(message);
+		leftDiv.appendChild(subtext);
+		item.appendChild(leftDiv);
+
+		// Insert before VIEW ALL if exists
+		let viewAll = notificationList.querySelector('.dropdown-footer');
+		if (viewAll) {
+			notificationList.insertBefore(item, viewAll);
+		} else {
+			notificationList.appendChild(item);
+		}
+
+		// Add VIEW ALL if missing
+		if (!viewAll) {
+			const viewDiv = document.createElement('div');
+			viewDiv.classList.add('text-center', 'dropdown-footer');
+
+			const viewLink = document.createElement('a');
+			viewLink.href = "#";
+			viewLink.innerText = "VIEW ALL";
+
+			viewDiv.appendChild(viewLink);
+			notificationList.appendChild(viewDiv);
+		}
+	});
+
+</script>

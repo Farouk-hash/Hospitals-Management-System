@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
+use App\Traits\CheckGuards;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,7 @@ use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
 {
+    use CheckGuards ; 
     /**
      * Display the login view.
      */
@@ -30,7 +32,6 @@ class AuthenticatedSessionController extends Controller
         $routeServiceProviderValue = $this->routeServiceProviderValue($guard);
         $request->authenticate();
         $request->session()->regenerate();
-
         return redirect()->intended($routeServiceProviderValue);         
     }
     protected function routeServiceProviderValue(string $guard){
@@ -38,10 +39,12 @@ class AuthenticatedSessionController extends Controller
             return RouteServiceProvider::ADMIN ;
         }elseif($guard == 'doctor'){
             return RouteServiceProvider::DOCTOR;
-        }elseif($guard == 'xray_employee'){
+        }elseif($guard == 'ray_employee'){
             return RouteServiceProvider::RAY_EMPLOYEE;
+        }elseif($guard == 'patient'){
+            return RouteServiceProvider::PATIENT;
         }else{
-            return RouteServiceProvider::HOME ;
+            return RouteServiceProvider::WEB ;
         }
     }
     /**
@@ -49,17 +52,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        if (Auth::guard('admin')->check()) {
-            $guard = 'admin';
-        } elseif (Auth::guard('web')->check()) {
-            $guard = 'web';
-        }elseif (Auth::guard('doctor')->check()) {
-            $guard = 'doctor';
-        }elseif (Auth::guard('xray_employee')->check()) {
-            $guard = 'xray_employee';
-        } else {
-            abort(500); // not authenticated
-        }
+        $guard = $this->checkGuards()['value'];
 
         Auth::guard($guard )->logout();
 

@@ -1,5 +1,9 @@
 (function($) {
     "use strict";
-	$('#lightgallery').lightGallery();
-	$('#video-gallery').lightGallery(); 
+    $('#lightgallery').lightGallery({
+        thumbnail: true,
+        animateThumb: true,
+        showThumbByDefault: true
+    });
+    $('#video-gallery').lightGallery(); 
 })(jQuery);

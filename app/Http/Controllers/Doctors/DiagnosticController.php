@@ -24,8 +24,13 @@ class DiagnosticController extends Controller
     public function store_diagnostic_lab(Request $request){
         return $this->diagnosticRepositoryInterface->store_diagnostic_lab($request);
     }
-
+    public function store_diagnostic_ray(Request $request){
+        return $this->diagnosticRepositoryInterface->store_diagnostic_ray($request);
+    }
     public function show(int $patient_id){
         return $this->diagnosticRepositoryInterface->show($patient_id);
+    }
+    public function show_ray_images(int $ray_id){
+        return $this->diagnosticRepositoryInterface->show_ray_images($ray_id);
     }
 }

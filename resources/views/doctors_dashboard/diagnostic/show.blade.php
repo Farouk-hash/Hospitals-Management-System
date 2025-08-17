@@ -168,7 +168,95 @@
                                                             <div class="col-xl-12">
                                                                 <div class="card">
                                                                     <div class="card-body">
-                                                                        X-RAY
+                                                                        @if($rays)
+                                                                            <div class="vtimeline">
+                                                                            @foreach($rays as $ray)
+
+                                                                                <div class="timeline-wrapper 
+                                                                                {{ $loop->iteration % 2 == 0 ? '' : 'timeline-inverted' }} timeline-wrapper-primary">
+
+                                                                                    <div class="timeline-badge"><i class="las la-check-circle"></i></div>
+                                                                                    <div class="timeline-panel">
+                                                                                        <div class="timeline-heading">
+                                                                                            <h6 class="timeline-title">{{$ray->notes}}</h6>
+                                                                                        </div>
+
+
+                                                                                        <div class="timeline-footer d-flex align-items-start flex-wrap w-100">
+
+                                                                                            <div class="w-100 mb-1">
+                                                                                                <i class="fas fa-stethoscope"></i>&nbsp;
+                                                                                                <span>{{ $ray->diagnostic->diagnostic }}</span>
+                                                                                            </div>
+
+                                                                                            <div class="w-100 mb-1">
+                                                                                                <i class="fas fa-user-nurse"></i>&nbsp;
+                                                                                                <span>{{ $ray->employee->name ?? 'No-employee' }}</span>
+                                                                                            </div>
+
+                                                                                            <div class="w-100 mb-1">
+                                                                                                <i class="fas fa-user-md"></i>&nbsp;
+                                                                                                <span>{{ $ray->diagnostic->invoice->doctor->name ?? $ray->diagnostic->invoice->doctor->translations()->first()->name }}</span>
+                                                                                            </div>
+
+
+
+                                                                                            <div class="w-100 mb-1">
+                                                                                                <i class="fas fa-vials"></i>&nbsp;
+                                                                                                <span 
+                                                                                                style="color:{{$ray->status->id == '1' ? 'red' : 'green'}};">
+                                                                                                {{ $ray->status->translation->name }}
+                                                                                            </span>
+                                                                                            </div>
+                                                                                            
+                                                                                        
+                                                                                            <div class="w-100 mt-2">
+                                                                                                <i class="fe fe-calendar text-muted mr-1"></i>
+                                                                                                {{ $ray->created_at->format('Y-m-d') }}
+                                                                                            </div>
+
+                                                                                            {{-- Buttons only for doctor who owns this --}}
+                                                                                            @if($ray->diagnostic->invoice->doctor->id == Auth::id())
+                                                                                                @if($ray->rays_status_id != 2)
+                                                                                                    <div class="w-100 mt-2">
+                                                                                                        <button type="button" 
+                                                                                                                class="btn btn-primary btn-sm" 
+                                                                                                                data-toggle="modal" 
+                                                                                                                data-target="#editRayModal{{ $ray->id }}">
+                                                                                                            <i class="fas fa-edit"></i>{{ __('dashboard/patient_trans.edit') }}
+                                                                                                        </button>
+
+                                                                                                        <button type="button" 
+                                                                                                                class="btn btn-danger btn-sm" 
+                                                                                                                data-toggle="modal" 
+                                                                                                                data-target="#deleteRayModal{{ $ray->id }}">
+                                                                                                            <i class="fas fa-trash"></i>{{ __('dashboard/patient_trans.delete') }}
+                                                                                                        </button>
+                                                                                                    </div>
+                                                                                                @else 
+                                                                                                    <div class="w-100 mt-2">
+                                                                                                        <a href="{{route('doctors_dashboard.diagnostic.show_ray_images' , [$ray->id])}}" 
+                                                                                                        class="btn btn-info btn-sm">
+                                                                                                            <i class="fas fa-images"></i>{{ __('dashboard/patient_trans.show_images') }}
+                                                                                                        </a>
+                                                                                                    </div>
+                                                                                                @endif
+                                                                                            @endif
+
+                                                                                        </div>
+
+
+
+                                                                                        
+                                                                                    </div>
+
+                                                                                    
+                                                                                </div>
+                                                                            @endforeach
+                                                                        </div>
+                                                                        @else 
+                                                                            {{__('dashboard/doctors_trans.no_diagnostic')}}
+                                                                        @endif
 
                                                                     </div>
                                                                 </div>
@@ -198,8 +286,68 @@
                                                                                         <div class="timeline-heading">
                                                                                             <h6 class="timeline-title">{{$lab->notes}}</h6>
                                                                                         </div>
+
+
+                                                                                        <div class="timeline-footer d-flex align-items-start flex-wrap w-100">
+
+                                                                                            <div class="w-100 mb-1">
+                                                                                                <i class="fas fa-stethoscope"></i>&nbsp;
+                                                                                                <span>{{ $lab->diagnostic->diagnostic }}</span>
+                                                                                            </div>
+
+                                                                                            <div class="w-100 mb-1">
+                                                                                                <i class="fas fa-vials"></i>&nbsp;
+                                                                                                <span 
+                                                                                                style="color:{{$lab->status->id == '1' ? 'red' : 'green'}};">
+                                                                                                {{ $lab->status->translation->name }}
+                                                                                            </span>
+                                                                                            </div>
+
+                                                                                        
+                                                                                            <div class="w-100 mt-2">
+                                                                                                <i class="fe fe-calendar text-muted mr-1"></i>
+                                                                                                {{ $lab->created_at->format('Y-m-d') }}
+                                                                                            </div>
+
+                                                                                            {{-- Buttons only for doctor who owns this --}}
+                                                                                            @if($lab->diagnostic->invoice->doctor->id == Auth::id())
+                                                                                                @if($lab->lab_status_id != 2)
+                                                                                                    <div class="w-100 mt-2">
+                                                                                                        <button type="button" 
+                                                                                                                class="btn btn-primary btn-sm" 
+                                                                                                                data-toggle="modal" 
+                                                                                                                data-target="#editRayModal{{ $lab->id }}">
+                                                                                                            <i class="fas fa-edit"></i>{{ __('dashboard/patient_trans.edit') }}
+                                                                                                        </button>
+
+                                                                                                        <button type="button" 
+                                                                                                                class="btn btn-danger btn-sm" 
+                                                                                                                data-toggle="modal" 
+                                                                                                                data-target="#deleteRayModal{{ $lab->id }}">
+                                                                                                            <i class="fas fa-trash"></i>{{ __('dashboard/patient_trans.delete') }}
+                                                                                                        </button>
+                                                                                                    </div>
+                                                                                                @else 
+                                                                                                    <div class="w-100 mt-2">
+                                                                                                        <a 
+                                                                                                        {{-- href="{{route('doctors_dashboard.diagnostic.show_ray_images' , [$lab->id])}}" --}}
+
+                                                                                                        class="btn btn-info btn-sm">
+                                                                                                            <i class="fas fa-images"></i>{{ __('dashboard/patient_trans.show_images') }}
+                                                                                                        </a>
+                                                                                                    </div>
+                                                                                                @endif
+                                                                                            @endif
+
+                                                                                        
+                                                                                        </div>
+
+
+
                                                                                         
                                                                                     </div>
+
+                                                                                    
                                                                                 </div>
                                                                             @endforeach
                                                                         </div>

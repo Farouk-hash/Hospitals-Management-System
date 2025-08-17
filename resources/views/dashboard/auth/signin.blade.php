@@ -45,7 +45,8 @@
 													<button class="dropdown-item login-selector" data-type="web" type="button">{{__('dashboard/login.user')}}</button>
 													<button class="dropdown-item login-selector" data-type="admin" type="button">{{__('dashboard/login.admin')}}</button>
 													<button class="dropdown-item login-selector" data-type="doctor" type="button">{{__('dashboard/login.doctor')}}</button>
-													<button class="dropdown-item login-selector" data-type="xray_employee" type="button">{{__('dashboard/login.xray_employee')}}</button>
+													<button class="dropdown-item login-selector" data-type="ray_employee" type="button">{{__('dashboard/login.xray_employee')}}</button>
+													<button class="dropdown-item login-selector" data-type="patient" type="button">{{__('dashboard/login.patient')}}</button>
 
 												</div>
 											</div>

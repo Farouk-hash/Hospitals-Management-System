@@ -22,13 +22,14 @@ class RedirectIfAuthenticated
         $redirectPaths = [
             'admin' => RouteServiceProvider::ADMIN,
             'doctor' => RouteServiceProvider::DOCTOR,
-            'xray_employee'=>RouteServiceProvider::RAY_EMPLOYEE,
-            'web' => RouteServiceProvider::HOME, // default web guard
+            'ray_employee'=>RouteServiceProvider::RAY_EMPLOYEE,
+            'patient'=>RouteServiceProvider::PATIENT,
+            'web' => RouteServiceProvider::WEB, // default web guard
         ];
-
+        
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                $redirectPath = $redirectPaths[$guard] ?? RouteServiceProvider::HOME;
+                $redirectPath = $redirectPaths[$guard] ?? RouteServiceProvider::WEB;
                 return redirect($redirectPath);
             }
         }

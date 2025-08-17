@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App;
+use App\Events\SingleInvoiceSubmitting;
 use App\Models\Dashboard\Doctor;
 use App\Models\Dashboard\FundAccount;
 use App\Models\Dashboard\Patient;
@@ -10,16 +10,20 @@ use App\Models\Dashboard\PatientAccount;
 use App\Models\Dashboard\PaymentTypes;
 use App\Models\Dashboard\Services;
 use App\Models\Dashboard\SingleInvoice as SingleInvoiceModel;
+use App\Traits\StoreNotification;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class SingleInvoices extends Component
 {
+    use StoreNotification ; 
     public $showTable = true;
     public $updated = false ; 
 
-    public $patient_name, $doctor_id, $section_variable , $section_id ,$service_id , $invoice_id , $patient_id ,$payment_type_id;
+    public $patient_name, $doctor_id, $section_variable , $section_id ,$service_id , $invoice_id , $patient_id ,$payment_type_id , 
+    $user_name , $creater_email , $creater_id;
 
     public $service_price = 0, $discount = 0, $tax_rate = 14, $tax_amount = 0, $total_price = 0;
     public $subtotal = 0; // Price after discount, before tax
@@ -28,6 +32,11 @@ class SingleInvoices extends Component
         $this->showTable = false;
     }
 
+    public function mount(){
+        $this->user_name = Auth::user()->name;
+        $this->creater_email = Auth::user()->email ; 
+        $this->creater_id = Auth::user()->id ;
+    }
     public function doctorChanged()
     {
         if ($this->doctor_id) {
@@ -103,6 +112,32 @@ class SingleInvoices extends Component
             else{
                 $single_invoice = SingleInvoiceModel::create($result);
                 $this->invoice_id = $single_invoice->id;
+
+                // STORE NOTIFICATION ; 
+                $patient =Patient::where('id',$this->patient_id)->first() ;
+                $patient_name = $patient->name ?? $patient->translations->first()->name ;
+                $this->storeNotification([
+
+                'user_id'=>$this->doctor_id , 
+                'user_type'=>'\App\Models\Dashboard\Doctor',
+                'email'=>$this->creater_email , // admin@gmail.com
+                'user_name'=>$this->user_name , // admin
+
+                'route_params'=>['patient_id'=>$this->patient_id] , 
+                'route_type'=>'patient_show' ,
+                
+                'message'=>'new invoice created for '.$patient_name
+                ]);
+                
+                // SEND REAL-TIME NOTIFICATION ABOUT NEW INVOICE CREATED VIA PUSHER ; 
+                $data = [
+                'name'=>$this->user_name , 
+                'user_id'=>$this->doctor_id ,
+                'message'=>'invoice for '.$patient_name , 
+                'patient_id'=>$this->patient_id , 
+                'time' => date('Y-m-d H:i:s')] ;
+                
+                event(new SingleInvoiceSubmitting($data));
             }
             // cash ;
             if($this->payment_type_id == 1){
