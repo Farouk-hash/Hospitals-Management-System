@@ -15,31 +15,117 @@
 @endsection
 @section('content')
 
-<!-- row -->
-<div class="row row-sm main-content-app mb-4">
-    <div class="col-xl-4 col-lg-5">
-        <div class="card">
-            <div class="main-content-left main-content-left-chat">
-                <nav class="nav main-nav-line main-nav-line-chat">
-                    <a class="nav-link active" data-toggle="tab" href="">المحادثات الاخيرة</a>
-                </nav>
-                @livewire('chat.chatlist')
-            </div>
+<div>
+    @if(!$selectedChat)
+        @livewire('chat.create')
+    @else
+        <div class="row row-sm main-content-app mb-4">
+        <!-- Chatlist column -->
+        <div class="col-xl-4 col-lg-5">
+            @livewire('chat.chatlist',['highlightConversationId' => $selectedConversationId])
+        </div>
+        
+        <!-- Chatbox column -->
+        <div class="col-xl-8 col-lg-7">
+            @livewire('chat.chatbox',['highlightConversationId' => $selectedConversationId])
         </div>
     </div>
-
-    <div class="col-xl-8 col-lg-7">
-        <div class="card">
-            <a class="main-header-arrow" href="" id="ChatBodyHide"><i class="icon ion-md-arrow-back"></i></a>
-            @livewire('chat.chatbox')
-            
-        </div>
-    </div>
+    @endif
 </div>
 
 @section('js')
-<!--Internal  lightslider js -->
-<script src="{{URL::asset('dashboard/plugins/lightslider/js/lightslider.min.js')}}"></script>
-<!--Internal  Chat js -->
-<script src="{{URL::asset('dashboard/js/chat.js')}}"></script>
+
+    {{-- FOR ECHO DUBGGING  --}}
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(() => {
+            console.log('=== Echo Debug ===');
+            console.log('Echo available:', typeof window.Echo !== 'undefined');
+            console.log('Pusher available:', typeof window.Pusher !== 'undefined');
+            console.log('Echo object:', window.Echo);
+        }, 1000);
+    });
+    </script>
+
+    {{-- FOR ECHO USER-STATUS USER ENTER CHATBOX , USER LEAVE CHATBOX  --}}
+    <script>
+    document.addEventListener('DOMContentLoaded', function(){
+        console.log('Setting up Echo listener for online status...');
+        const channelName = 'userStatus.{{ class_basename(auth()->user())}}.{{auth()->id()}}';
+        console.log('Channel name:', channelName);
+        
+         // Handle page unload (navigation, close, refresh)
+            window.addEventListener('beforeunload', function(e) {
+                console.log('🔴 User leaving page - setting offline');
+                // Send offline status via Livewire
+                @this.call('setUserOffline'); 
+            });
+            
+            // Handle visibility change (tab switch, minimize)
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
+                    console.log('🟡 Page hidden - setting offline');
+                    @this.call('setUserOffline');
+                } else {
+                    console.log('🟢 Page visible - setting online');
+                    @this.call('setUserOnline');
+                }
+            });
+            
+            // Handle focus/blur events
+            window.addEventListener('blur', function() {
+                console.log('🟡 Window lost focus - setting offline');
+                @this.call('setUserOffline');
+            });
+            
+            window.addEventListener('focus', function() {
+                console.log('🟢 Window gained focus - setting online');
+                @this.call('setUserOnline');
+            });
+
+        window.Echo.private(channelName)
+        .listen('.status-changed', (e) => {
+            console.log('🔄 Chat partner is', e.status);
+            console.log('Partner ID:', e.user_id);
+            console.log('Partner class:', e.user_class);
+            
+            // Target the specific conversation by ID
+            const conversationId = `conversation-${e.user_class}-${e.user_id}`;
+            const statusIndicator = document.querySelector(`#${conversationId} .status-indicator`);
+            
+            if (statusIndicator) {
+                // Smooth color transition
+                statusIndicator.style.transition = 'background-color 0.3s ease';
+                statusIndicator.style.backgroundColor = e.status === 'online' ? 'green' : 'red';
+                console.log(`✅ Updated ${e.user_class} ${e.user_id} to ${e.status}`);
+                
+                // Optional: Add a brief animation to draw attention
+                statusIndicator.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    statusIndicator.style.transform = 'scale(1)';
+                }, 200);
+            } else {
+                console.log('⚠️ Status indicator not found for user:', e.user_id);
+            }
+        });
+    });
+    </script>
+
+    {{-- FOR ECHO REALTIME MESSAGES  --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+        window.Echo.private(`chat.{{ class_basename(auth()->user()) }}.{{ auth()->id() }}`)
+        .listen('.message.sent', (e) => {
+            console.log('livewire listening');
+            console.log('Livewire received' , e);
+            // FOR SPECIFIF VIEW [WHEN WE WERE CALLING IT AT CHATBOX VIEW]
+            // @this.call('receiveMessage', e);
+            // Use global dispatch instead of finding specific component
+            Livewire.dispatch('message-received-global', [e]);
+        });
+        });
+
+    </script>
+ 
+
 @endsection

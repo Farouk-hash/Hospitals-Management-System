@@ -21,6 +21,7 @@ class Sendmessage extends Component
     {
         $this->submit();
     }
+    
     public function render()
     {
         return view('livewire.chat.sendmessage');

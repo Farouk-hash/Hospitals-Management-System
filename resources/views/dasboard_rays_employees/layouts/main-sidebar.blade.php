@@ -48,7 +48,7 @@
 								{{__('chat/chatlist.chatlist-title')}}
 							</span><i class="angle fe fe-chevron-down"></i></a>
 						<ul class="slide-menu">
-							<li>
+							{{-- <li>
 								<a class="slide-item" href="{{ route('chat.create' , ['lang'=>App::getLocale() , 'send_to'=>'doctor']) }}">
 									{{__('chat/chatlist.chatlist-doctors')}}
 								</a>
@@ -57,7 +57,7 @@
 								<a class="slide-item" href="{{ route('chat.create' , ['lang'=>App::getLocale() , 'send_to'=>'admin']) }}">
 									{{__('chat/chatlist.chatlist-admins')}}
 								</a>
-							</li>
+							</li> --}}
 							<li>
 								<a class="slide-item" href="{{ route('chat.main' , ['lang'=>App::getLocale()]) }}">
 									{{__('chat/chatlist.chatlist-last-conversations')}}

@@ -7,6 +7,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Log;
 
 class SendMessage implements ShouldBroadcast
 {
@@ -25,7 +26,7 @@ class SendMessage implements ShouldBroadcast
     {
         $receiverType = class_basename($this->message->receiver_type);
         $receiverId = $this->message->receiver_id;
-
+        Log::info("broadCastOn to chat.{$receiverType}.{$receiverId}");
         return new PrivateChannel("chat.{$receiverType}.{$receiverId}");
     }
 

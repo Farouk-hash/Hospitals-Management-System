@@ -52,11 +52,7 @@
 								{{__('chat/chatlist.chatlist-title')}}
 							</span><i class="angle fe fe-chevron-down"></i></a>
 						<ul class="slide-menu">
-							<li>
-								<a class="slide-item" href="{{ route('chat.create',['lang'=>App::getLocale(), 'send_to'=>'ray_employee']) }}">
-									{{__('chat/chatlist.chatlist-xray-employee')}}
-								</a>
-							</li>
+							
 							<li>
 								<a class="slide-item" href="{{ route('chat.main' , ['lang'=>App::getLocale()]) }}">
 									{{__('chat/chatlist.chatlist-last-conversations')}}

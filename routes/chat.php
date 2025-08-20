@@ -12,6 +12,6 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::prefix('{lang}/chat')->group(function(){
-    Route::get('/conversation/{send_to}',Create::class)->name('chat.create');
+    // Route::get('/conversation/{send_to}',Create::class)->name('chat.create');
     Route::get('/last_conversations',Main::class)->name('chat.main');
 });

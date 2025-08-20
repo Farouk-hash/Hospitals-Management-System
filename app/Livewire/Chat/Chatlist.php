@@ -11,7 +11,7 @@ use Log;
 
 class Chatlist extends Component
 {   
-    public $conversations , $sender_id ;
+    public $conversations , $sender_id , $highlightConversationId ;
     protected function ensureAuthentication(){
         if(Auth::guard('doctor')->check()){
             Auth::shouldUse('doctor');
@@ -27,7 +27,11 @@ class Chatlist extends Component
         $this->ensureAuthentication();
     }
 
-    public function mount(){
+    public function mount($highlightConversationId = null){
+        if($highlightConversationId){
+            // FOR HIGHLIGHTING THE SELECTED ONE ; 
+            $this->highlightConversationId = $highlightConversationId ; 
+        }
         $this->loadConversations();
     }
     
@@ -42,7 +46,23 @@ class Chatlist extends Component
     }
 
     public function chatSelected($conversationID){
+        $this->highlightConversationId = $conversationID;
         $this->dispatch('chat-selected' , $conversationID)->to(Chatbox::class);
+    }
+
+    // #[On('highlight-selected-chat')]
+    // public function highlightSelectedChat($highLightConversationID){
+    //     dd('here');
+    //     $this->chatSelected($highLightConversationID);
+    // }
+
+    public function goBack(){
+        $this->dispatch('go-back');
+    }
+    
+    public function removeConversation($conversationID){
+        Conversation::destroy($conversationID);
+        $this->loadConversations();
     }
 
     public function render()

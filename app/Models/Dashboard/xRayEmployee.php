@@ -10,7 +10,7 @@ class xRayEmployee extends Authenticatable
 {
     use HasFactory;
     protected $table = 'x_ray_emolyee';
-    protected $fillable = ['name','email','email_verified_at','password'];
+    protected $fillable = ['name','email','email_verified_at','password' , 'is_online'];
 
     protected $hidden = [
         'password',

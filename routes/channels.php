@@ -25,3 +25,11 @@ Broadcast::channel('chat.{userType}.{userId}', function ($user, $userType, $user
     ]);
     return $currentUserType === $userType && $user->id == $userId;
  },['guards' => ['doctor','ray_employee']]);
+
+
+Broadcast::channel('userStatus.{userType}.{userId}', function ($user, $userType, $userId) {
+    $currentUserType = class_basename(get_class($user));
+    \Log::info('Broadcast auth attempt for setting user online');
+    return $currentUserType === $userType && $user->id == $userId;
+ },['guards' => ['doctor','ray_employee']]);
+

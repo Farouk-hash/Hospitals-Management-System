@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Chat;
 
+use App;
 use App\Models\Admin;
 use App\Models\Chat\Conversation;
 use App\Models\Dashboard\Doctor;
@@ -13,65 +14,91 @@ use Livewire\Component;
 
 class Create extends Component
 {
-    // view-components ;
-    public $layout , $title ; 
-    public $users , $sender_id , $sender_type , $receiver_type ; 
+    public $title, $selectedType = false;
+    public $users = [], $send_to, $sender_id, $sender_type, $receiver_type, $conversationID;
 
-    protected function setReceiverType($send_to){
+    protected function setReceiverType($send_to)
+    {
         $values = [
-            'doctor'=>['model_string'=>'App\Models\Dashboard\Doctor' , 'layout'=>'doctors_dashboard.layouts.master-doctor' , 'title'=>'chatlist-doctors' , 'model'=>Doctor::class] , 
-            'ray_employee'=>['model_string'=>'App\Models\Dashboard\xRayEmployee', 'layout'=>'doctors_dashboard.layouts.master-doctor' ,'title'=>'chatlist-xray-employee', 'model'=>xRayEmployee::class],
-            'admin'=>['model_string'=>'App\Models\Admin' ,'title'=>'chatlist-admins', 'layout'=>'dashboard.layouts.master', 'model'=>Admin::class]
+            'doctor' => [
+                'model_string' => 'App\Models\Dashboard\Doctor',
+                'title' => 'chatlist-doctors',
+                'model' => Doctor::class
+            ],
+            'ray_employee' => [
+                'model_string' => 'App\Models\Dashboard\xRayEmployee',
+                'title' => 'chatlist-xray-employee',
+                'model' => xRayEmployee::class
+            ],
+            'admin' => [
+                'model_string' => 'App\Models\Admin',
+                'title' => 'chatlist-admins',
+                'model' => Admin::class
+            ]
         ];
-        $this->title = $values[$send_to]['title']; // for localization ;
-        $this->layout = $values[$send_to]['layout']; // for localization ;
 
-        $this->receiver_type = $values[$send_to]['model_string']; 
-        $this->users =   $values[$send_to]['model']::all();
+        $this->title = $values[$send_to]['title'];
+        $this->receiver_type = $values[$send_to]['model_string'];
+        $this->users = $values[$send_to]['model']::all();
     }
-    
-    public function mount($send_to){
-        if(Auth::guard('doctor')->check()){
+
+    public function mount()
+    {
+        if (Auth::guard('doctor')->check()) {
             Auth::shouldUse('doctor');
-        }
-        elseif(Auth::guard('ray_employee')->check()){
+        } elseif (Auth::guard('ray_employee')->check()) {
             Auth::shouldUse('ray_employee');
-        }
-        else{
+        } else {
             return redirect()->route('login');
         }
-        $this->setReceiverType($send_to);
+        
         $this->sender_id = Auth::id();
         $this->sender_type = get_class(Auth::user());
+    }
 
-    }   
+    public function loadUsersByType($userTypeSelected)
+    {
+        $this->selectedType = true; // Remove Buttons For Selecting UsersTypes ; 
+        $this->send_to = $userTypeSelected; 
+        $this->setReceiverType($this->send_to);
+    }
 
-    public function createConversation($receiver_id){
-        // check if conversation exists ; 
-        $conv = Conversation::
-        countConversation($this->sender_id , $this->sender_type ,
-        $receiver_id ,$this->receiver_type)
-        ->count();
+    public function createConversation($receiver_id)
+    {
+        // Check if conversation exists
+        $conv = Conversation::countConversation(
+            $this->sender_id,
+            $this->sender_type,
+            $receiver_id,
+            $this->receiver_type
+        );
 
-        if($conv == 0){
+        if ($conv->count() == 0) {
             DB::beginTransaction();
-            try{
-                Conversation::create(['sender_id'=>$this->sender_id , 'sender_type'=>$this->sender_type ,
-                'receiver_id'=>$receiver_id , 'receiver_type'=>$this->receiver_type]);
+            try {
+                $conversation = Conversation::create([
+                    'sender_id' => $this->sender_id,
+                    'sender_type' => $this->sender_type,
+                    'receiver_id' => $receiver_id,
+                    'receiver_type' => $this->receiver_type
+                ]);
                 DB::commit();
-            }catch(Exception $e){
+                $this->conversationID = $conversation->id;
+            } catch (Exception $e) {
                 DB::rollBack();
-                dd($e);
+                session()->flash('error', 'Failed to create conversation');
+                return;
             }
-
-        }else{
-            dd('conversation exists');
+        } else {
+            $this->conversationID = $conv->first()->id;
         }
-    }   
+
+       // Dispatch to parent component
+        $this->dispatch('conversationCreated', $this->conversationID);
+    }
 
     public function render()
-    {        
-        return view('livewire.chat.create')
-        ->extends($this->layout);
+    {
+        return view('livewire.chat.create');
     }
 }

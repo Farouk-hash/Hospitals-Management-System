@@ -12,7 +12,7 @@ class Doctor extends Authenticatable
     use HasFactory ;
     use Translatable ;
 
-    protected $fillable = ['email','password' ,'section_id', 'phone','status'];
+    protected $fillable = ['email','password' ,'section_id', 'phone','status' , 'is_online'];
     public $translatedAttributes = ['name'];
     protected $casts = [
         'email_verified_at' => 'datetime',
